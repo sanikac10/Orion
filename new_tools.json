@@ -21,5 +21,27 @@
     "fallback_strategy": "If information is missing or unclear, the tool should ask the user for the necessary details and provide an intermediate summary of current findings.",
     "created_at": "2025-08-02T15:40:06.168817",
     "source_workflow_complexity": 8
+  },
+  "adaptive_restaurant_search_optimizer": {
+    "tool_name": "adaptive_restaurant_search_optimizer",
+    "objective": "Optimize restaurant discovery workflows using search_restaurants tool by iteratively refining cuisine, location, and dietary parameters for vegetarian food preferences in downtown or Mission areas.",
+    "trigger_patterns": [
+      "find restaurants",
+      "food recommendations",
+      "dining options",
+      "cuisine search"
+    ],
+    "optimized_system_prompt": "You are tasked with finding vegetarian dining options specifically within the downtown or Mission areas. Begin by seeking Italian vegetarian options in downtown; if unsuccessful, broaden the search to any vegetarian options within downtown or Mission. Consider user preferences for cuisine, location specificity, and dietary restrictions when searching. Also, while searching ensure \"vegetarian\", \"vegan_options\", \"gluten_free\", \"halal\", \"organic\" are sent to dietary restrictions not really cuisine.",
+    "tool_sequence": [
+      "search_restaurants",
+      "search_restaurants",
+      "search_restaurants"
+    ],
+    "context_handling_instructions": "Use results from each search to decide next steps, broadening the search criteria based on prior results.",
+    "max_internal_turns": 3,
+    "success_criteria": "Find at least one suitable vegetarian restaurant within specified areas matching user preferences.",
+    "fallback_strategy": "If no results are found, suggest expanding the geographic area or consider places offering vegetarian-friendly rather than exclusively vegetarian options.",
+    "created_at": "2025-08-02T16:25:22.608427",
+    "source_workflow_complexity": 7
   }
 }

@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 from datetime import datetime
 from openai import OpenAI
 from tool_usage import tools
@@ -225,6 +226,14 @@ Focus on: What was the user ultimately trying to achieve? Group all supporting a
         tool_sequence = []
         context_flow = []
         
+        # Count user and assistant turns in the segment
+        user_turns = len([t for t in segment_turns if t["type"] == "user_input"])
+        assistant_turns = len([t for t in segment_turns if t["type"] in ["assistant_response", "assistant_tool_request"]])
+        
+        # Add the counts to the segment for later use
+        segment["user_turns_in_segment"] = user_turns
+        segment["assistant_turns_in_segment"] = assistant_turns
+        
         for turn in segment_turns:
             if turn["type"] == "assistant_tool_request":
                 for tool_call in turn["tool_calls"]:
@@ -253,7 +262,8 @@ USER'S ULTIMATE OBJECTIVE: {segment['user_objective_description']}
 TOOLS USED IN SEQUENCE: {tool_sequence}
 CONTEXT PASSED BETWEEN TOOLS: {context_flow}
 TOTAL CONVERSATION TURNS: {segment['turn_id_for_split_end'] - segment['turn_id_for_split_start'] + 1}
-USER INTERVENTIONS NEEDED: {segment['user_turns_in_segment']}
+USER INTERVENTIONS NEEDED: {segment.get('user_turns_in_segment', user_turns)}
+ASSISTANT TURNS: {segment.get('assistant_turns_in_segment', assistant_turns)}
 
 Evaluate this complete workflow for optimization potential:
 
@@ -359,45 +369,40 @@ COMPLEXITY SCORE: {workflow_analysis.get('workflow_complexity_score', 0)}
 ORIGINAL CONVERSATION SAMPLE:
 {json.dumps(segment_turns, indent=2)}
 
-CRITICAL NAMING REQUIREMENTS:
-- Tool name MUST be generic based on the ACTUAL workflow type (not person names)
-- Examples: "intelligent_data_analyzer", "smart_workflow_optimizer", "context_aggregator", "multi_source_investigator"
-- NEVER use specific person names, company names, or domain-specific hardcoding
-- Tool must work for ANY similar workflow across ANY domain (calendar, restaurants, code, emails, transactions, etc.)
+TOOL CREATION REQUIREMENTS:
 
-MANDATORY COMPLIANCE RULE: The tool sequence MUST NEVER include "create_calendar_event" or any other action tools that modify data. This tool should only gather information and provide comprehensive analysis.
+1. **WORKFLOW-SPECIFIC NAMING**: The tool name should reflect the ACTUAL workflow being optimized
+   - If it's restaurant search: "intelligent_restaurant_finder" or "adaptive_restaurant_search_optimizer"
+   - If it's calendar/email: "meeting_context_analyzer" or "scheduling_conflict_detector"
+   - If it's code analysis: "code_issue_investigator" or "dependency_analysis_tool"
+   - Tool names should be descriptive of the specific domain and tools being used
 
-DOMAIN AGNOSTIC DESIGN: This tool must work across ALL domains in the system:
-- Calendar/scheduling workflows
-- Restaurant recommendation workflows  
-- Code issue investigation workflows
-- Email analysis workflows
-- Transaction/financial workflows
-- System monitoring workflows
-- File management workflows
-- Any other information gathering and analysis workflows
+2. **EXPLICIT TOOL MENTION**: The objective MUST explicitly mention the specific tools being utilized:
+   - Example: "Optimize restaurant discovery workflows using search_restaurants tool with iterative refinement"
+   - Example: "Analyze scheduling conflicts by coordinating get_events_by_timeframe and get_emails_by_sender tools"
+   - The objective should make it clear what tools this intelligent tool orchestrates
 
-INFORMATION VALIDATION: If the tool requires specific information that cannot be found or inferred, the tool MUST explicitly ask the user for that information rather than proceeding with incomplete data.
+3. **DOMAIN-SPECIFIC SYSTEM PROMPT**: The system prompt should be tailored to the specific workflow:
+   - For restaurant search: Mention cuisine preferences, location filtering, dietary restrictions
+   - For scheduling: Mention time conflicts, attendee analysis, meeting priorities
+   - For code issues: Mention file analysis, dependency tracking, bug investigation
+   - Include domain-specific guidance and expected parameter types
 
-IMMEDIATE EXECUTION PATTERN:
-1. MUST extract relevant entities/parameters dynamically from user input
-2. MUST immediately call ALL relevant tools with the extracted information
-3. MUST validate that required information exists - if not, ask user for missing details
-4. MUST gather comprehensive context from all available sources
-5. MUST synthesize ALL collected information into a detailed response
-6. MUST discuss ALL findings, even if seemingly unrelated - they could be user preferences or important context
+4. **SPECIFIC TRIGGER PATTERNS**: Triggers should be specific to the workflow domain:
+   - Restaurant: "find restaurants", "food recommendations", "dining options", "cuisine search"
+   - Calendar: "schedule meeting", "check availability", "find time slot", "meeting conflict"
+   - Code: "debug issue", "analyze code", "check dependencies", "investigate bug"
 
-COMPREHENSIVE INFORMATION AGGREGATION:
-- Discuss ALL data found from each tool call in detail
-- Provide context and relationships between different pieces of information
-- If any information is missing, explicitly state this and ask for what's needed
-- Discuss any patterns or preferences that emerge from the data
-- Provide actionable suggestions based on ALL available information
-- Present a complete picture that helps user make informed decisions
+5. **WORKFLOW CONTEXT IN OBJECTIVE**: The objective should explain the specific workflow pattern:
+   - "Intelligently search restaurants by iteratively refining cuisine, location, and dietary parameters using search_restaurants tool"
+   - "Detect scheduling conflicts by analyzing calendar events and email communications for comprehensive meeting planning"
 
-FORBIDDEN ACTIONS: Never include any tools that create, modify, or delete data. Only use tools that read and analyze information.
+6. **TOOL SEQUENCE JUSTIFICATION**: Explain WHY these specific tools are used together:
+   - Restaurant workflow: Multiple search_restaurants calls with different parameters for comprehensive coverage
+   - Scheduling workflow: get_events_by_timeframe for conflicts + get_emails_by_sender for context
+   - Code workflow: search_code_issues + get_file_by_path + search_dependencies for full investigation
 
-The tool MUST have a completely generic name and objective that works for any information-gathering workflow across any domain."""
+The tool MUST be specifically designed for the workflow being optimized, not a generic "information gatherer"."""
             }],
             tools=[tool_creation_function],
             tool_choice={"type": "function", "function": {"name": "create_optimized_tool"}}
@@ -551,26 +556,34 @@ The tool MUST have a completely generic name and objective that works for any in
         print(f"\n💾 Tools saved to {self.tools_file}")
 
 def main():
-    gepa = GEPA()
-    gepa.process_thread("example_threads/thread_20250802_143621.json")
-    
-    print("\n" + "="*60)
-    print("🧪 TESTING INTELLIGENT TOOL EXECUTION")
-    print("="*60)
-    
-    test_message = "Hey, bro Supriti Vijay wants to schedule a meeting with me around Jan 16th 3-4p"
-    
-    if gepa.existing_tools:
-        first_tool_name = list(gepa.existing_tools.keys())[0]
-        print(f"\n📤 Input: {test_message}")
-        print(f"🎯 Using tool: {first_tool_name}")
-        
-        result = gepa.execute_intelligent_tool(test_message, first_tool_name)
-        print(f"\n📥 Output:\n{result}")
-        
-        print(f"\n🔍 Tool triggered patterns: {gepa.existing_tools[first_tool_name]['trigger_patterns']}")
+    # Accept thread file as command line argument if provided
+    if len(sys.argv) > 1:
+        thread_file = sys.argv[1]
     else:
-        print("❌ No tools available for testing")
+        thread_file = "example_threads/thread_20250802_143621.json"
+    
+    gepa = GEPA()
+    gepa.process_thread(thread_file)
+    
+    # Only run testing if this is the main execution (not imported)
+    if __name__ == "__main__" and len(sys.argv) <= 1:
+        print("\n" + "="*60)
+        print("🧪 TESTING INTELLIGENT TOOL EXECUTION")
+        print("="*60)
+        
+        test_message = "Hey, bro Supriti Vijay wants to schedule a meeting with me around Jan 16th 3-4p"
+        
+        if gepa.existing_tools:
+            first_tool_name = list(gepa.existing_tools.keys())[0]
+            print(f"\n📤 Input: {test_message}")
+            print(f"🎯 Using tool: {first_tool_name}")
+            
+            result = gepa.execute_intelligent_tool(test_message, first_tool_name)
+            print(f"\n📥 Output:\n{result}")
+            
+            print(f"\n🔍 Tool triggered patterns: {gepa.existing_tools[first_tool_name]['trigger_patterns']}")
+        else:
+            print("❌ No tools available for testing")
 
 if __name__ == "__main__":
     main()

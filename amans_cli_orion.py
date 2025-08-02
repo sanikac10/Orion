@@ -541,18 +541,14 @@ Extract relevant parameters from the conversation context (dates, times, names, 
         print(f"\n🧠 Running GEPA analysis on: {os.path.basename(self.most_recent_thread)}")
         
         try:
-            # Modify gepa.py to accept thread file as command line argument
-            result = subprocess.run([
-                "python", "gepa.py", self.most_recent_thread
-            ], capture_output=True, text=True, cwd=".")
+            # Import and run GEPA directly
+            from gepa import GEPA
             
-            if result.returncode == 0:
-                print("✅ GEPA analysis completed")
-                print(result.stdout)
-                self.reload_intelligent_tools()
-            else:
-                print("❌ GEPA analysis failed")
-                print(result.stderr)
+            gepa_instance = GEPA()
+            gepa_instance.process_thread(self.most_recent_thread)
+            
+            print("✅ GEPA analysis completed")
+            self.reload_intelligent_tools()
                 
         except Exception as e:
             print(f"❌ Error running GEPA: {str(e)}")
