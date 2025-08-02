@@ -471,10 +471,198 @@ tools = [
             },
             "strict": False
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_calendar_events",
+            "description": "Search calendar events by title, location, or attendee",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search term to look for in event titles and descriptions"
+                    },
+                    "attendee": {
+                        "type": "string",
+                        "description": "Filter by attendee email or name"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "Filter by location (partial match)"
+                    }
+                },
+                "required": ["query"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_calendar_by_date",
+            "description": "Get all calendar events for a specific date",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "description": "Date in ISO format (e.g., 2024-01-15)"
+                    }
+                },
+                "required": ["date"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "check_time_availability",
+            "description": "Check if a specific time slot is free",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "start_time": {
+                        "type": "string",
+                        "description": "Start time in ISO format (e.g., 2024-01-15T14:00:00Z)"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "description": "End time in ISO format (e.g., 2024-01-15T15:00:00Z)"
+                    }
+                },
+                "required": ["start_time", "end_time"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_calendar_event_by_id",
+            "description": "Get detailed information about a specific calendar event by its ID",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "description": "The unique ID of the calendar event (e.g., cal_event_001)"
+                    }
+                },
+                "required": ["event_id"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_events_by_timeframe",
+            "description": "Get all calendar events within a specific time range",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "start_time": {
+                        "type": "string",
+                        "description": "Start timestamp in ISO format (e.g., 2024-01-15T09:00:00Z)"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "description": "End timestamp in ISO format (e.g., 2024-01-15T18:00:00Z)"
+                    }
+                },
+                "required": ["start_time", "end_time"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "create_calendar_event",
+            "description": "Create a new calendar event and add it to the calendar",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Event title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Event description"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "description": "Start time in ISO format (e.g., 2024-01-15T14:00:00Z)"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "description": "End time in ISO format (e.g., 2024-01-15T15:00:00Z)"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "Event location (optional)"
+                    },
+                    "attendees": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "email": {"type": "string"},
+                                "name": {"type": "string"}
+                            }
+                        },
+                        "description": "List of attendees"
+                    }
+                },
+                "required": ["title", "start_time", "end_time"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_free_time_slots",
+            "description": "Find available time slots within a date range",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "start_date": {
+                        "type": "string",
+                        "description": "Start date in ISO format (e.g., 2024-01-15)"
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "description": "End date in ISO format (e.g., 2024-01-20)"
+                    },
+                    "duration_minutes": {
+                        "type": "integer",
+                        "description": "Required duration in minutes (e.g., 60)"
+                    },
+                    "working_hours_only": {
+                        "type": "boolean",
+                        "description": "Only show slots during working hours (9 AM - 6 PM)"
+                    }
+                },
+                "required": ["start_date", "end_date", "duration_minutes"],
+                "additionalProperties": False
+            },
+            "strict": False
+        }
     }
 ]
 
-from tools import search_code_issues, get_issue_by_id, get_issues_by_location, search_emails, get_email_by_id, get_emails_by_sender, search_repo_files, get_file_by_path, search_dependencies, search_local_files, get_local_file_by_path, get_directory_info, search_restaurants, get_restaurant_by_id, find_restaurants_by_distance, search_system_logs, get_metrics_by_service, get_logs_by_timeframe, search_transactions, get_transaction_by_id, get_expenses_by_timeframe
+from tools import search_code_issues, get_issue_by_id, get_issues_by_location, search_emails, get_email_by_id, get_emails_by_sender, search_repo_files, get_file_by_path, search_dependencies, search_local_files, get_local_file_by_path, get_directory_info, search_restaurants, get_restaurant_by_id, find_restaurants_by_distance, search_system_logs, get_metrics_by_service, get_logs_by_timeframe, search_transactions, get_transaction_by_id, get_expenses_by_timeframe, search_calendar_events, get_calendar_by_date, check_time_availability, get_calendar_event_by_id, get_events_by_timeframe, create_calendar_event, find_free_time_slots
 import json
 
 if __name__ == "__main__":

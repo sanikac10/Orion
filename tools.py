@@ -1,6 +1,148 @@
 import json
 from typing import List, Dict, Any, Optional
 
+def load_calendar():
+    with open('data_lake/calendar.json', 'r') as f:
+        return json.load(f)['calendar_events']
+
+def save_calendar(events):
+    with open('data_lake/calendar.json', 'w') as f:
+        json.dump({"calendar_events": events}, f, indent=2)
+
+def search_calendar_events(query: str, attendee: Optional[str] = None, location: Optional[str] = None) -> List[Dict[str, Any]]:
+    events = load_calendar()
+    results = []
+    
+    for event in events:
+        if query.lower() in event['title'].lower() or query.lower() in event.get('description', '').lower():
+            if attendee is None or any(attendee.lower() in att['email'].lower() or attendee.lower() in att['name'].lower() for att in event['attendees']):
+                if location is None or (event.get('location') and location.lower() in event['location'].lower()):
+                    results.append(event)
+    
+    return results
+
+def get_calendar_by_date(date: str) -> List[Dict[str, Any]]:
+    events = load_calendar()
+    results = []
+    
+    for event in events:
+        event_date = event['start_time'].split('T')[0]
+        if event_date == date:
+            results.append(event)
+    
+    return sorted(results, key=lambda x: x['start_time'])
+
+def check_time_availability(start_time: str, end_time: str) -> Dict[str, Any]:
+    events = load_calendar()
+    conflicts = []
+    
+    for event in events:
+        # Check for overlap
+        if (start_time < event['end_time'] and end_time > event['start_time']):
+            conflicts.append(event)
+    
+    return {
+        "is_free": len(conflicts) == 0,
+        "conflicts": conflicts,
+        "conflicting_count": len(conflicts)
+    }
+
+def get_calendar_event_by_id(event_id: str) -> Optional[Dict[str, Any]]:
+    events = load_calendar()
+    
+    for event in events:
+        if event['id'] == event_id:
+            return event
+    
+    return None
+
+def get_events_by_timeframe(start_time: str, end_time: str) -> List[Dict[str, Any]]:
+    events = load_calendar()
+    results = []
+    
+    for event in events:
+        # Check if event overlaps with the timeframe
+        if event['start_time'] < end_time and event['end_time'] > start_time:
+            results.append(event)
+    
+    return sorted(results, key=lambda x: x['start_time'])
+
+def create_calendar_event(title: str, start_time: str, end_time: str, description: str = "", 
+                         location: Optional[str] = None, attendees: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
+    events = load_calendar()
+    
+    # Generate new ID
+    existing_ids = [int(event['id'].split('_')[-1]) for event in events if event['id'].startswith('cal_event_')]
+    new_id = f"cal_event_{max(existing_ids) + 1:03d}" if existing_ids else "cal_event_001"
+    
+    # Default attendees to just the user
+    if attendees is None:
+        attendees = [{"email": "aman.priyanshu@company.com", "name": "Aman Priyanshu", "response": "accepted", "organizer": True}]
+    
+    new_event = {
+        "id": new_id,
+        "title": title,
+        "description": description,
+        "start_time": start_time,
+        "end_time": end_time,
+        "location": location,
+        "attendees": attendees,
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-19T12:00:00Z",  # Current time in real implementation
+        "recurring": False
+    }
+    
+    events.append(new_event)
+    save_calendar(events)
+    
+    return new_event
+
+def find_free_time_slots(start_date: str, end_date: str, duration_minutes: int, 
+                        working_hours_only: bool = True) -> List[Dict[str, str]]:
+    from datetime import datetime, timedelta
+    
+    events = get_events_by_timeframe(f"{start_date}T00:00:00Z", f"{end_date}T23:59:59Z")
+    free_slots = []
+    
+    current_date = datetime.fromisoformat(start_date.replace('Z', '+00:00'))
+    end_date_dt = datetime.fromisoformat(end_date.replace('Z', '+00:00'))
+    
+    while current_date <= end_date_dt:
+        if working_hours_only:
+            day_start = current_date.replace(hour=9, minute=0, second=0)
+            day_end = current_date.replace(hour=18, minute=0, second=0)
+        else:
+            day_start = current_date.replace(hour=0, minute=0, second=0)
+            day_end = current_date.replace(hour=23, minute=59, second=59)
+        
+        # Get events for this day
+        day_events = [e for e in events if e['start_time'].startswith(current_date.strftime('%Y-%m-%d'))]
+        day_events.sort(key=lambda x: x['start_time'])
+        
+        # Find gaps between events
+        current_time = day_start
+        for event in day_events:
+            event_start = datetime.fromisoformat(event['start_time'].replace('Z', '+00:00'))
+            if (event_start - current_time).total_seconds() >= duration_minutes * 60:
+                free_slots.append({
+                    "start_time": current_time.isoformat().replace('+00:00', 'Z'),
+                    "end_time": event_start.isoformat().replace('+00:00', 'Z'),
+                    "duration_minutes": int((event_start - current_time).total_seconds() / 60)
+                })
+            current_time = max(current_time, datetime.fromisoformat(event['end_time'].replace('Z', '+00:00')))
+        
+        # Check time after last event until end of day
+        if (day_end - current_time).total_seconds() >= duration_minutes * 60:
+            free_slots.append({
+                "start_time": current_time.isoformat().replace('+00:00', 'Z'),
+                "end_time": day_end.isoformat().replace('+00:00', 'Z'),
+                "duration_minutes": int((day_end - current_time).total_seconds() / 60)
+            })
+        
+        current_date += timedelta(days=1)
+    
+    return free_slots
+
 def load_code_contexts():
     with open('data_lake/code_contexts.json', 'r') as f:
         return json.load(f)['code_context']
