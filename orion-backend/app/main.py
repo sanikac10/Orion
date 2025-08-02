@@ -9,7 +9,6 @@ import os
 from datetime import datetime
 from typing import Dict, Any
 from pathlib import Path
-from dotenv import load_dotenv
 
 from .models import ChatRequest, ChatResponse
 from .websocket_manager import websocket_manager
@@ -17,8 +16,7 @@ from .learning_agent import learning_agent
 from .data_manager import data_manager
 from .graph_engine import graph_engine
 
-# Load environment variables
-load_dotenv()
+
 
 # Create FastAPI app
 app = FastAPI(

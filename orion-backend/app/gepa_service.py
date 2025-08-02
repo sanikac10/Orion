@@ -80,7 +80,6 @@ class GepaService:
                 model="gpt-4o-mini",
                 messages=conversation,
                 tools=tools,  # Your friend's tools
-                parallel_tool_calls=True
             )
             
             assistant_message = response.choices[0].message

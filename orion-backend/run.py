@@ -6,7 +6,7 @@ Orion Learning Agent Backend Runner - GEPA Powered
 import uvicorn
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+
 
 def main():
     """Run the GEPA-powered Orion Learning Agent backend"""
@@ -14,8 +14,6 @@ def main():
     print("Self-Learning AI Agent with Advanced Tools")
     print("-" * 50)
     
-    # Load environment variables
-    load_dotenv()
     
     # Check for OpenAI API key
     if not os.getenv("OPENAI_API_KEY"):
