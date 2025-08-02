@@ -1,0 +1,70 @@
+{
+  "flow_name": "Email_Management Flow",
+  "learning_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Start"
+      },
+      {
+        "id": "B",
+        "type": "learning",
+        "label": "Learn"
+      },
+      {
+        "id": "C",
+        "type": "action",
+        "label": "Process"
+      },
+      {
+        "id": "D",
+        "type": "end",
+        "label": "Complete"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      },
+      {
+        "from": "C",
+        "to": "D"
+      }
+    ]
+  },
+  "cached_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Start"
+      },
+      {
+        "id": "B",
+        "type": "cached",
+        "label": "Execute"
+      },
+      {
+        "id": "C",
+        "type": "end",
+        "label": "Done"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      }
+    ]
+  }
+}

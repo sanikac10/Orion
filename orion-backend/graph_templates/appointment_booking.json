@@ -1,0 +1,166 @@
+{
+  "flow_name": "Appointment Booking Flow",
+  "learning_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Query Received"
+      },
+      {
+        "id": "B",
+        "type": "decision",
+        "label": "Parse Request"
+      },
+      {
+        "id": "C",
+        "type": "action",
+        "label": "Check Calendar"
+      },
+      {
+        "id": "D",
+        "type": "condition",
+        "label": "Conflict?"
+      },
+      {
+        "id": "E",
+        "type": "learning",
+        "label": "Ask User Preference"
+      },
+      {
+        "id": "F",
+        "type": "action",
+        "label": "Search Alternatives"
+      },
+      {
+        "id": "G",
+        "type": "action",
+        "label": "Lookup Contact"
+      },
+      {
+        "id": "H",
+        "type": "action",
+        "label": "Check Availability"
+      },
+      {
+        "id": "I",
+        "type": "decision",
+        "label": "Present Options"
+      },
+      {
+        "id": "J",
+        "type": "learning",
+        "label": "User Selection"
+      },
+      {
+        "id": "K",
+        "type": "action",
+        "label": "Book Appointment"
+      },
+      {
+        "id": "L",
+        "type": "end",
+        "label": "Complete & Cache"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      },
+      {
+        "from": "C",
+        "to": "D"
+      },
+      {
+        "from": "D",
+        "to": "E",
+        "label": "Conflict"
+      },
+      {
+        "from": "D",
+        "to": "G",
+        "label": "No Conflict"
+      },
+      {
+        "from": "E",
+        "to": "F"
+      },
+      {
+        "from": "F",
+        "to": "G"
+      },
+      {
+        "from": "G",
+        "to": "H"
+      },
+      {
+        "from": "H",
+        "to": "I"
+      },
+      {
+        "from": "I",
+        "to": "J"
+      },
+      {
+        "from": "J",
+        "to": "K"
+      },
+      {
+        "from": "K",
+        "to": "L"
+      }
+    ]
+  },
+  "cached_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Query Received"
+      },
+      {
+        "id": "B",
+        "type": "cached",
+        "label": "Apply Pattern"
+      },
+      {
+        "id": "C",
+        "type": "cached",
+        "label": "Auto-Check All"
+      },
+      {
+        "id": "D",
+        "type": "cached",
+        "label": "Present Results"
+      },
+      {
+        "id": "E",
+        "type": "end",
+        "label": "Complete"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      },
+      {
+        "from": "C",
+        "to": "D"
+      },
+      {
+        "from": "D",
+        "to": "E"
+      }
+    ]
+  }
+}
