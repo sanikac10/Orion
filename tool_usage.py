@@ -24,7 +24,7 @@ tools = [
                 "required": ["query"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -43,7 +43,7 @@ tools = [
                 "required": ["issue_id"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -62,7 +62,7 @@ tools = [
                 "required": ["file_path"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -89,7 +89,7 @@ tools = [
                 "required": ["query"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -108,7 +108,7 @@ tools = [
                 "required": ["email_id"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -127,7 +127,7 @@ tools = [
                 "required": ["sender"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -155,7 +155,7 @@ tools = [
                 "required": ["query"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -174,7 +174,7 @@ tools = [
                 "required": ["file_path"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -193,7 +193,7 @@ tools = [
                 "required": ["package_name"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -221,7 +221,7 @@ tools = [
                 "required": ["query"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -240,7 +240,7 @@ tools = [
                 "required": ["file_path"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -259,7 +259,7 @@ tools = [
                 "required": ["dir_path"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -289,7 +289,7 @@ tools = [
                 "required": [],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -308,7 +308,7 @@ tools = [
                 "required": ["restaurant_id"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -327,7 +327,7 @@ tools = [
                 "required": ["max_distance_km"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -356,7 +356,7 @@ tools = [
                 "required": [],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -375,7 +375,7 @@ tools = [
                 "required": ["service"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -398,7 +398,7 @@ tools = [
                 "required": ["start_time", "end_time"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -427,7 +427,7 @@ tools = [
                 "required": [],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -446,7 +446,7 @@ tools = [
                 "required": ["transaction_id"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     },
     {
@@ -469,7 +469,7 @@ tools = [
                 "required": ["start_time", "end_time"],
                 "additionalProperties": False
             },
-            "strict": True
+            "strict": False
         }
     }
 ]

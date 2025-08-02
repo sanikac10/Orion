@@ -1,0 +1,692 @@
+{
+    "calendar_events": [
+      {
+        "id": "cal_event_001",
+        "title": "Emergency: Auth System Issues",
+        "description": "Critical JWT validation failures detected - immediate response needed",
+        "start_time": "2024-01-15T09:30:00Z",
+        "end_time": "2024-01-15T10:30:00Z",
+        "location": "Conference Room B",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com", 
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez", 
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-15T09:18:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_007",
+        "title": "Working Lunch - Auth Crisis Strategy",
+        "description": "Strategy session over lunch to discuss auth fix approach",
+        "start_time": "2024-01-15T12:30:00Z",
+        "end_time": "2024-01-15T13:30:00Z",
+        "location": "Conference Room A",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu", 
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez", 
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-15T11:45:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_012",
+        "title": "Security Audit - External Consultant",
+        "description": "Emergency security assessment with Mike Thompson from CyberSec Solutions",
+        "start_time": "2024-01-16T14:00:00Z",
+        "end_time": "2024-01-16T16:00:00Z",
+        "location": "Conference Room B",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com", 
+            "name": "David Kim",
+            "response": "accepted"
+          },
+          {
+            "email": "mike.thompson@cybersec.com",
+            "name": "Mike Thompson",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-15T15:30:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_015",
+        "title": "BigCorp - Security Discussion", 
+        "description": "Client meeting to address authentication concerns and provide incident update",
+        "start_time": "2024-01-17T14:00:00Z",
+        "end_time": "2024-01-17T15:00:00Z",
+        "location": "BigCorp Financial Services Office - 45 Market St",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson", 
+            "response": "accepted"
+          },
+          {
+            "email": "jennifer.smith@bigcorp.com",
+            "name": "Jennifer Smith",
+            "response": "accepted"
+          },
+          {
+            "email": "mark.wilson@bigcorp.com",
+            "name": "Mark Wilson",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-17T09:15:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_018",
+        "title": "Team Dinner - Auth Crisis Resolved",
+        "description": "Celebration dinner for successfully resolving the authentication crisis",
+        "start_time": "2024-01-18T19:00:00Z",
+        "end_time": "2024-01-18T21:00:00Z", 
+        "location": "Vik's Chaat Berkeley",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com", 
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-18T16:45:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_002",
+        "title": "Daily Standup",
+        "description": "Engineering team daily standup",
+        "start_time": "2024-01-15T09:00:00Z",
+        "end_time": "2024-01-15T09:15:00Z",
+        "location": "Conference Room A",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-08T10:00:00Z",
+        "recurring": true
+      },
+      {
+        "id": "cal_event_003",
+        "title": "Deep Work - Auth Debug",
+        "description": "Extended debugging session for JWT validation issues",
+        "start_time": "2024-01-15T18:45:00Z",
+        "end_time": "2024-01-15T22:00:00Z",
+        "location": null,
+        "attendees": [
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted",
+            "organizer": true
+          }
+        ],
+        "created_by": "alex.chen@company.com",
+        "created_at": "2024-01-15T17:30:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_004",
+        "title": "Dentist Appointment",
+        "description": "Routine cleaning",
+        "start_time": "2024-01-16T10:00:00Z",
+        "end_time": "2024-01-16T11:00:00Z",
+        "location": "Dr. Patel Dental - 123 Main St",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-05T15:20:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_005",
+        "title": "1:1 with Sarah",
+        "description": "Weekly one-on-one check-in",
+        "start_time": "2024-01-16T15:00:00Z",
+        "end_time": "2024-01-16T15:30:00Z",
+        "location": "Sarah's Office",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-02T09:00:00Z",
+        "recurring": true
+      },
+      {
+        "id": "cal_event_006",
+        "title": "Code Review - Auth Patches",
+        "description": "Review JWT fix implementation and rollout plan",
+        "start_time": "2024-01-17T11:30:00Z",
+        "end_time": "2024-01-17T12:30:00Z",
+        "location": "Conference Room B",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-17T08:15:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_008",
+        "title": "Sprint Planning - Q1 Priorities",
+        "description": "Q1 feature roadmap and sprint planning",
+        "start_time": "2024-01-18T10:00:00Z",
+        "end_time": "2024-01-18T11:30:00Z",
+        "location": "Conference Room B",
+        "attendees": [
+          {
+            "email": "lisa.wong@company.com",
+            "name": "Lisa Wong",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted"
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "lisa.wong@company.com",
+        "created_at": "2024-01-16T15:45:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_009",
+        "title": "Post-Mortem: Auth Incident Analysis",
+        "description": "Retrospective on auth crisis - what went well, areas for improvement",
+        "start_time": "2024-01-19T09:00:00Z",
+        "end_time": "2024-01-19T10:00:00Z",
+        "location": "Conference Room A",
+        "attendees": [
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          },
+          {
+            "email": "alex.chen@company.com",
+            "name": "Alex Chen",
+            "response": "accepted"
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          },
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted"
+          },
+          {
+            "email": "lisa.wong@company.com",
+            "name": "Lisa Wong",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "sarah.johnson@company.com",
+        "created_at": "2024-01-18T20:45:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_010",
+        "title": "Documentation Sprint - Auth Procedures",
+        "description": "Update security runbooks and incident response procedures",
+        "start_time": "2024-01-19T15:00:00Z",
+        "end_time": "2024-01-19T17:00:00Z",
+        "location": "Conference Room A",
+        "attendees": [
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "maria.rodriguez@company.com",
+            "name": "Maria Rodriguez",
+            "response": "accepted"
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "john.martinez@company.com",
+        "created_at": "2024-01-19T11:30:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_011",
+        "title": "Coffee with Rajesh",
+        "description": "Catch up over coffee",
+        "start_time": "2024-01-18T17:30:00Z",
+        "end_time": "2024-01-18T18:30:00Z",
+        "location": "Blue Bottle Coffee",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "rajesh.sharma@gmail.com",
+            "name": "Rajesh Sharma",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-17T20:00:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_013",
+        "title": "All Hands Meeting",
+        "description": "Monthly company-wide meeting",
+        "start_time": "2024-01-17T16:00:00Z",
+        "end_time": "2024-01-17T17:00:00Z",
+        "location": "Main Conference Room",
+        "attendees": [
+          {
+            "email": "ceo@company.com",
+            "name": "Michael Chen",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "ceo@company.com",
+        "created_at": "2024-01-10T12:00:00Z",
+        "recurring": true
+      },
+      {
+        "id": "cal_event_014",
+        "title": "Gym Session",
+        "description": "Evening workout",
+        "start_time": "2024-01-16T18:30:00Z",
+        "end_time": "2024-01-16T19:30:00Z",
+        "location": "24 Hour Fitness Castro",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-16T09:00:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_016",
+        "title": "Lunch with Mom & Dad",
+        "description": "Weekend family lunch",
+        "start_time": "2024-01-20T12:00:00Z",
+        "end_time": "2024-01-20T14:00:00Z",
+        "location": "Perbacco Italian Restaurant",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-15T18:45:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_017",
+        "title": "Marketing Sync",
+        "description": "Monthly engineering-marketing alignment",
+        "start_time": "2024-01-19T14:00:00Z",
+        "end_time": "2024-01-19T14:30:00Z",
+        "location": null,
+        "attendees": [
+          {
+            "email": "marketing@company.com",
+            "name": "Amanda Wilson",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted"
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "declined"
+          }
+        ],
+        "created_by": "marketing@company.com",
+        "created_at": "2024-01-12T10:00:00Z",
+        "recurring": true
+      },
+      {
+        "id": "cal_event_019",
+        "title": "Infrastructure Review",
+        "description": "Weekly ops review with DevOps team",
+        "start_time": "2024-01-18T14:00:00Z",
+        "end_time": "2024-01-18T15:00:00Z",
+        "location": "Conference Room C",
+        "attendees": [
+          {
+            "email": "david.kim@company.com",
+            "name": "David Kim",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "sarah.johnson@company.com",
+            "name": "Sarah Johnson",
+            "response": "accepted"
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "david.kim@company.com",
+        "created_at": "2024-01-11T16:00:00Z",
+        "recurring": true
+      },
+      {
+        "id": "cal_event_020",
+        "title": "Product Demo Prep",
+        "description": "Prepare demo for BigCorp integration showcase",
+        "start_time": "2024-01-16T16:30:00Z",
+        "end_time": "2024-01-16T17:30:00Z",
+        "location": "Conference Room A",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "lisa.wong@company.com",
+            "name": "Lisa Wong",
+            "response": "accepted"
+          },
+          {
+            "email": "john.martinez@company.com",
+            "name": "John Martinez",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-16T11:00:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_021",
+        "title": "Weekend Hiking Trip",
+        "description": "Marin Headlands hiking with college friends",
+        "start_time": "2024-01-21T09:00:00Z",
+        "end_time": "2024-01-21T16:00:00Z",
+        "location": "Marin Headlands Visitor Center",
+        "attendees": [
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "mike.patel@gmail.com",
+            "name": "Mike Patel",
+            "response": "accepted"
+          },
+          {
+            "email": "priya.shah@gmail.com",
+            "name": "Priya Shah",
+            "response": "tentative"
+          }
+        ],
+        "created_by": "aman.priyanshu@company.com",
+        "created_at": "2024-01-14T19:30:00Z",
+        "recurring": false
+      },
+      {
+        "id": "cal_event_022",
+        "title": "Security Training",
+        "description": "Mandatory quarterly security awareness training",
+        "start_time": "2024-01-19T11:00:00Z",
+        "end_time": "2024-01-19T12:00:00Z",
+        "location": null,
+        "attendees": [
+          {
+            "email": "hr@company.com",
+            "name": "Jessica Martinez",
+            "response": "accepted",
+            "organizer": true
+          },
+          {
+            "email": "aman.priyanshu@company.com",
+            "name": "Aman Priyanshu",
+            "response": "accepted"
+          }
+        ],
+        "created_by": "hr@company.com",
+        "created_at": "2024-01-08T14:00:00Z",
+        "recurring": false
+      }
+    ]
+  }
