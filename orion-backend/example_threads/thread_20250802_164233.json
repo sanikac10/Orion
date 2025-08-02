@@ -1,0 +1,26 @@
+{
+  "thread_id": "20250802_164233",
+  "timestamp": "2025-08-02T16:42:33.233472",
+  "turns": [
+    {
+      "turn": 1,
+      "type": "mock_turn",
+      "content": "You are Orion, a helpful AI assistant. Keep responses under 150 words unless using tools. [TESTING MODE: Using mock tools since real GEPA files are not available]"
+    },
+    {
+      "turn": 2,
+      "type": "mock_turn",
+      "content": "Hello"
+    },
+    {
+      "turn": 3,
+      "type": "mock_turn",
+      "content": "ChatCompletionMessage(content='Hello! How can I assist you today?', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None)"
+    }
+  ],
+  "metadata": {
+    "total_turns": 3,
+    "mock_mode": true,
+    "success": true
+  }
+}

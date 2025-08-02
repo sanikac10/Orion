@@ -214,6 +214,7 @@ class LearningAgent:
             success=result.get("success", False),
             messageId=f"gepa_{session_id}_{datetime.now().strftime('%H%M%S')}",
             sessionId=session_id,
+            response=result.get("response", "I'm processing your request..."),  # ADD THIS LINE!
             isLearningMode=True,
             taskFamily={
                 "type": "gepa_powered",
@@ -224,6 +225,8 @@ class LearningAgent:
             },
             error=result.get("error")
         )
+
+
     
     async def continue_gepa_conversation(self, session_id: str, message: str) -> ChatResponse:
         """Continue existing GEPA conversation"""
@@ -266,6 +269,7 @@ class LearningAgent:
             success=result.get("success", False),
             messageId=f"gepa_{session_id}_continue_{datetime.now().strftime('%H%M%S')}",
             sessionId=session_id,
+            response=result.get("response", "I'm continuing to process your request..."),  # ADD THIS LINE!
             isLearningMode=True,
             taskFamily={
                 "type": "gepa_powered",
@@ -276,6 +280,7 @@ class LearningAgent:
             },
             error=result.get("error")
         )
+
     
     async def process_gepa_message(self, session_id: str) -> Dict[str, Any]:
         """Process message using GEPA or mock system"""

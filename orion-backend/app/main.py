@@ -134,8 +134,9 @@ async def send_message(chat_request: ChatRequest, background_tasks: BackgroundTa
         if not learning_agent.openai_client:
             return ChatResponse(
                 success=False,
-                messageId="",
+                messageId="error_no_openai",
                 sessionId=chat_request.sessionId,
+                response="OpenAI API not configured. Please set OPENAI_API_KEY environment variable.",
                 isLearningMode=False,
                 error="OpenAI API not configured. Please set OPENAI_API_KEY environment variable."
             )
@@ -147,11 +148,35 @@ async def send_message(chat_request: ChatRequest, background_tasks: BackgroundTa
             user_id=chat_request.userId
         )
         
-        return result
+        # Ensure the result has a response field
+        if hasattr(result, 'response') and result.response:
+            return result
+        else:
+            # If no response field, create a default one
+            if hasattr(result, '__dict__'):
+                result_dict = result.__dict__
+            else:
+                result_dict = result
+            
+            # Add a default response if missing
+            if 'response' not in result_dict or not result_dict['response']:
+                result_dict['response'] = "I processed your request successfully, but no response was generated. Please check the system configuration."
+            
+            return ChatResponse(**result_dict)
     
     except Exception as e:
         print(f"❌ Error in chat endpoint: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        traceback.print_exc()
+        
+        return ChatResponse(
+            success=False,
+            messageId=f"error_{chat_request.sessionId}",
+            sessionId=chat_request.sessionId,
+            response=f"An error occurred: {str(e)}",
+            isLearningMode=False,
+            error=str(e)
+        )
 
 @app.get("/api/v1/chat/history/{session_id}")
 async def get_chat_history(session_id: str):
