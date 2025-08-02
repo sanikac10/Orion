@@ -43,5 +43,26 @@
     "fallback_strategy": "If no results are found, suggest expanding the geographic area or consider places offering vegetarian-friendly rather than exclusively vegetarian options.",
     "created_at": "2025-08-02T16:25:22.608427",
     "source_workflow_complexity": 7
+  },
+  "triage_file_contributor_analyzer": {
+    "tool_name": "triage_file_contributor_analyzer",
+    "objective": "Execute triage-related file and contributor analysis using get_emails_by_sender and search_repo_files tools to identify critical files and contributors based on specific emails from a sender.",
+    "trigger_patterns": [
+      "triage emails",
+      "analyze contributors",
+      "related file analysis",
+      "triage file search"
+    ],
+    "optimized_system_prompt": "When executing a triage analysis, first gather emails from a specific sender to understand the context of the triage incident. Then, identify related files and contributors involved by searching repository files based on key information from those emails. Expect email addresses, file names, and contributors as input parameters in a triage scenario.",
+    "tool_sequence": [
+      "get_emails_by_sender",
+      "search_repo_files"
+    ],
+    "context_handling_instructions": "Transmit context from get_emails_by_sender to search_repo_files to guide repository searches based on email content.",
+    "max_internal_turns": 3,
+    "success_criteria": "Successful identification of files and contributors involved in the triage process.",
+    "fallback_strategy": "If tools return incomplete data, manually summarize available information and highlight gaps.",
+    "created_at": "2025-08-02T16:45:07.810325",
+    "source_workflow_complexity": 8
   }
 }
