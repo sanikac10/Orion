@@ -27,7 +27,14 @@ TOOL_MAP = {
     "get_logs_by_timeframe": get_logs_by_timeframe,
     "search_transactions": search_transactions,
     "get_transaction_by_id": get_transaction_by_id,
-    "get_expenses_by_timeframe": get_expenses_by_timeframe
+    "get_expenses_by_timeframe": get_expenses_by_timeframe,
+    "search_calendar_events": search_calendar_events,
+    "get_calendar_by_date": get_calendar_by_date,
+    "check_time_availability": check_time_availability,
+    "get_calendar_event_by_id": get_calendar_event_by_id,
+    "get_events_by_timeframe": get_events_by_timeframe,
+    "create_calendar_event": create_calendar_event,
+    "find_free_time_slots": find_free_time_slots
 }
 
 def execute_tools(tool_calls):
