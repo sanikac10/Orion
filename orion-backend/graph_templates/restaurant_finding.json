@@ -1,0 +1,124 @@
+{
+  "flow_name": "Restaurant Finding Flow",
+  "learning_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Food Request"
+      },
+      {
+        "id": "B",
+        "type": "decision",
+        "label": "Parse Preferences"
+      },
+      {
+        "id": "C",
+        "type": "learning",
+        "label": "Ask Cuisine Type"
+      },
+      {
+        "id": "D",
+        "type": "learning",
+        "label": "Ask Location"
+      },
+      {
+        "id": "E",
+        "type": "action",
+        "label": "Search Restaurants"
+      },
+      {
+        "id": "F",
+        "type": "learning",
+        "label": "Ask Filters"
+      },
+      {
+        "id": "G",
+        "type": "action",
+        "label": "Apply Filters"
+      },
+      {
+        "id": "H",
+        "type": "decision",
+        "label": "Present Options"
+      },
+      {
+        "id": "I",
+        "type": "end",
+        "label": "Cache Preferences"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      },
+      {
+        "from": "C",
+        "to": "D"
+      },
+      {
+        "from": "D",
+        "to": "E"
+      },
+      {
+        "from": "E",
+        "to": "F"
+      },
+      {
+        "from": "F",
+        "to": "G"
+      },
+      {
+        "from": "G",
+        "to": "H"
+      },
+      {
+        "from": "H",
+        "to": "I"
+      }
+    ]
+  },
+  "cached_mode": {
+    "nodes": [
+      {
+        "id": "A",
+        "type": "start",
+        "label": "Food Request"
+      },
+      {
+        "id": "B",
+        "type": "cached",
+        "label": "Apply Food Prefs"
+      },
+      {
+        "id": "C",
+        "type": "cached",
+        "label": "Smart Filter"
+      },
+      {
+        "id": "D",
+        "type": "end",
+        "label": "Instant Results"
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "to": "C"
+      },
+      {
+        "from": "C",
+        "to": "D"
+      }
+    ]
+  }
+}
