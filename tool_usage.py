@@ -662,7 +662,7 @@ tools = [
     }
 ]
 
-from tools import search_code_issues, get_issue_by_id, get_issues_by_location, search_emails, get_email_by_id, get_emails_by_sender, search_repo_files, get_file_by_path, search_dependencies, search_local_files, get_local_file_by_path, get_directory_info, search_restaurants, get_restaurant_by_id, find_restaurants_by_distance, search_system_logs, get_metrics_by_service, get_logs_by_timeframe, search_transactions, get_transaction_by_id, get_expenses_by_timeframe, search_calendar_events, get_calendar_by_date, check_time_availability, get_calendar_event_by_id, get_events_by_timeframe, create_calendar_event, find_free_time_slots
+from tools import search_code_issues, get_issue_by_id, get_issues_by_location, search_emails, get_email_by_id, get_emails_by_sender, search_repo_files, get_file_by_path, search_dependencies, search_local_files, get_local_file_by_path, get_directory_info, search_restaurants, get_restaurant_by_id, find_restaurants_by_distance, search_system_logs, get_metrics_by_service, get_logs_by_timeframe, search_transactions, get_transaction_by_id, get_expenses_by_timeframe, search_calendar_events, get_calendar_by_date, check_time_availability, get_calendar_event_by_id, get_events_by_timeframe, create_calendar_event, find_free_time_slots, load_calendar, save_calendar
 import json
 
 if __name__ == "__main__":
@@ -749,3 +749,113 @@ if __name__ == "__main__":
     print("\nTesting get_expenses_by_timeframe:")
     result = get_expenses_by_timeframe("2024-01-15T09:00:00Z", "2024-01-15T18:00:00Z")
     print(json.dumps(result, indent=2))
+
+
+    print("Testing search_calendar_events:")
+    result = search_calendar_events("auth", None, None)
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting search_calendar_events with attendee filter:")
+    result = search_calendar_events("meeting", "sarah.johnson")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting search_calendar_events with location filter:")
+    result = search_calendar_events("", None, "Conference Room")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_calendar_by_date:")
+    result = get_calendar_by_date("2024-01-15")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_calendar_by_date (busy day):")
+    result = get_calendar_by_date("2024-01-17")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting check_time_availability (should be free):")
+    result = check_time_availability("2024-01-15T08:00:00Z", "2024-01-15T08:30:00Z")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting check_time_availability (should have conflicts):")
+    result = check_time_availability("2024-01-15T09:00:00Z", "2024-01-15T10:00:00Z")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_calendar_event_by_id:")
+    result = get_calendar_event_by_id("cal_event_001")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_calendar_event_by_id (non-existent):")
+    result = get_calendar_event_by_id("cal_event_999")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_events_by_timeframe:")
+    result = get_events_by_timeframe("2024-01-15T09:00:00Z", "2024-01-15T18:00:00Z")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_events_by_timeframe (wider range):")
+    result = get_events_by_timeframe("2024-01-17T00:00:00Z", "2024-01-18T23:59:59Z")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting create_calendar_event (simple):")
+    result = create_calendar_event(
+        title="Test Meeting",
+        start_time="2024-01-22T14:00:00Z",
+        end_time="2024-01-22T15:00:00Z",
+        description="Unit test meeting"
+    )
+    test_event_id_1 = result['id']
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting create_calendar_event (with location and attendees):")
+    result = create_calendar_event(
+        title="Team Sync",
+        start_time="2024-01-22T16:00:00Z", 
+        end_time="2024-01-22T17:00:00Z",
+        description="Weekly team synchronization",
+        location="Conference Room B",
+        attendees=[
+            {"email": "aman.priyanshu@company.com", "name": "Aman Priyanshu", "response": "accepted", "organizer": True},
+            {"email": "sarah.johnson@company.com", "name": "Sarah Johnson", "response": "accepted", "organizer": False}
+        ]
+    )
+    test_event_id_2 = result['id']
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting find_free_time_slots (working hours only):")
+    result = find_free_time_slots("2024-01-15", "2024-01-16", 60, working_hours_only=True)
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting find_free_time_slots (30 min slots, any time):")
+    result = find_free_time_slots("2024-01-19", "2024-01-19", 30, working_hours_only=False)
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting find_free_time_slots (2 hour slots):")
+    result = find_free_time_slots("2024-01-20", "2024-01-21", 120, working_hours_only=True)
+    print(json.dumps(result, indent=2))
+    
+    # Test edge cases
+    print("\nTesting search_calendar_events (empty query):")
+    result = search_calendar_events("", None, None)
+    print(f"Found {len(result)} events with empty query")
+    
+    print("\nTesting search_calendar_events (no matches):")
+    result = search_calendar_events("nonexistent event xyz")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_calendar_by_date (weekend/no events):")
+    result = get_calendar_by_date("2024-01-13")  # Assuming this is a quiet day
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting check_time_availability (exact match with existing event):")
+    result = check_time_availability("2024-01-15T09:30:00Z", "2024-01-15T10:30:00Z")
+    print(json.dumps(result, indent=2))
+    
+    print("\nTesting get_events_by_timeframe (very narrow window):")
+    result = get_events_by_timeframe("2024-01-15T09:30:00Z", "2024-01-15T09:31:00Z")
+    print(json.dumps(result, indent=2))
+    
+    # Clean up test events
+    print("\nCleaning up test events...")
+    events = load_calendar()
+    events = [e for e in events if e['id'] not in [test_event_id_1, test_event_id_2]]
+    save_calendar(events)
+    print(f"Deleted test events: {test_event_id_1}, {test_event_id_2}")

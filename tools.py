@@ -104,8 +104,9 @@ def find_free_time_slots(start_date: str, end_date: str, duration_minutes: int,
     events = get_events_by_timeframe(f"{start_date}T00:00:00Z", f"{end_date}T23:59:59Z")
     free_slots = []
     
-    current_date = datetime.fromisoformat(start_date.replace('Z', '+00:00'))
-    end_date_dt = datetime.fromisoformat(end_date.replace('Z', '+00:00'))
+    # Parse dates without timezone info first, then add UTC
+    current_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d')
     
     while current_date <= end_date_dt:
         if working_hours_only:
@@ -122,27 +123,32 @@ def find_free_time_slots(start_date: str, end_date: str, duration_minutes: int,
         # Find gaps between events
         current_time = day_start
         for event in day_events:
-            event_start = datetime.fromisoformat(event['start_time'].replace('Z', '+00:00'))
+            # Parse event time and make it timezone-naive for comparison
+            event_start = datetime.strptime(event['start_time'].replace('Z', ''), '%Y-%m-%dT%H:%M:%S')
+            event_end = datetime.strptime(event['end_time'].replace('Z', ''), '%Y-%m-%dT%H:%M:%S')
+            
+            # Check if there's a gap before this event
             if (event_start - current_time).total_seconds() >= duration_minutes * 60:
                 free_slots.append({
-                    "start_time": current_time.isoformat().replace('+00:00', 'Z'),
-                    "end_time": event_start.isoformat().replace('+00:00', 'Z'),
+                    "start_time": current_time.strftime('%Y-%m-%dT%H:%M:%S') + "Z",
+                    "end_time": event_start.strftime('%Y-%m-%dT%H:%M:%S') + "Z",
                     "duration_minutes": int((event_start - current_time).total_seconds() / 60)
                 })
-            current_time = max(current_time, datetime.fromisoformat(event['end_time'].replace('Z', '+00:00')))
+            
+            # Move current_time to after this event
+            current_time = max(current_time, event_end)
         
         # Check time after last event until end of day
         if (day_end - current_time).total_seconds() >= duration_minutes * 60:
             free_slots.append({
-                "start_time": current_time.isoformat().replace('+00:00', 'Z'),
-                "end_time": day_end.isoformat().replace('+00:00', 'Z'),
+                "start_time": current_time.strftime('%Y-%m-%dT%H:%M:%S') + "Z",
+                "end_time": day_end.strftime('%Y-%m-%dT%H:%M:%S') + "Z",
                 "duration_minutes": int((day_end - current_time).total_seconds() / 60)
             })
         
         current_date += timedelta(days=1)
     
     return free_slots
-
 def load_code_contexts():
     with open('data_lake/code_contexts.json', 'r') as f:
         return json.load(f)['code_context']
