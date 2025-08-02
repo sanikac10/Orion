@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 from openai import OpenAI
 from tool_usage import tools
 from tools import *
@@ -71,15 +72,117 @@ def execute_tools(tool_calls):
     
     return tool_results
 
+def save_thread(conversation):
+    """Save conversation thread in chronological turn order for GEPA training"""
+    
+    # Ensure example_threads directory exists
+    os.makedirs("example_threads", exist_ok=True)
+    
+    # Generate filename with timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"thread_{timestamp}.json"
+    
+    # Structure turns chronologically
+    turns = []
+    turn_number = 1
+    
+    for i, msg in enumerate(conversation):
+        # Handle both dict and OpenAI object formats
+        if isinstance(msg, dict):
+            role = msg["role"]
+            content = msg.get("content", "")
+        else:
+            role = msg.role
+            content = msg.content or ""
+            
+        if role == "user":
+            turns.append({
+                "turn": turn_number,
+                "type": "user_input",
+                "content": content,
+                "timestamp": datetime.now().isoformat()
+            })
+            turn_number += 1
+            
+        elif role == "assistant":
+            # Check if this assistant message has tool calls
+            if hasattr(msg, 'tool_calls') and msg.tool_calls:
+                # Assistant wants to call tools
+                turns.append({
+                    "turn": turn_number,
+                    "type": "assistant_tool_request",
+                    "content": content,
+                    "tool_calls": [
+                        {
+                            "function": tc.function.name,
+                            "arguments": json.loads(tc.function.arguments),
+                            "call_id": tc.id
+                        } for tc in msg.tool_calls
+                    ]
+                })
+                turn_number += 1
+            else:
+                # Regular assistant response
+                turns.append({
+                    "turn": turn_number,
+                    "type": "assistant_response",
+                    "content": content
+                })
+                turn_number += 1
+                
+        elif role == "tool":
+            # Tool execution result (these are always dicts)
+            turns.append({
+                "turn": turn_number,
+                "type": "tool_result",
+                "tool_name": msg["name"],
+                "tool_call_id": msg["tool_call_id"],
+                "content": msg["content"],
+                "success": not msg["content"].startswith("Error")
+            })
+            turn_number += 1
+    
+    # Structure the thread data
+    thread_data = {
+        "thread_id": timestamp,
+        "timestamp": datetime.now().isoformat(),
+        "turns": turns,
+        "metadata": {
+            "total_turns": len(turns),
+            "user_turns": len([t for t in turns if t["type"] == "user_input"]),
+            "tool_calls": len([t for t in turns if t["type"] == "tool_result"]),
+            "success": not any(t.get("content", "").startswith("Error") for t in turns)
+        }
+    }
+    
+    # Save to file
+    filepath = os.path.join("example_threads", filename)
+    with open(filepath, 'w') as f:
+        json.dump(thread_data, f, indent=2)
+    
+    print(f"💾 Thread saved: {filename}")
+    return filepath
+
+def extract_tools_used(tool_results):
+    """Extract list of tools that were actually called"""
+    # This function is no longer needed with turn-wise saving
+    pass
+
 def main():
-    print("Orion CLI - Type 'CLOSE' to exit")
+    print("Orion CLI - Type 'CLOSE' to exit, 'SAVE' to save current thread")
     conversation = []
     
     while True:
         user_input = input("\nYou: ").strip()
         
         if user_input.upper() == 'CLOSE':
+            if conversation:
+                save_thread(conversation)
             break
+            
+        if user_input.upper() == 'SAVE' and conversation:
+            save_thread(conversation)
+            continue
         
         conversation.append({"role": "user", "content": user_input})
         
@@ -87,7 +190,7 @@ def main():
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant. Keep all responses under 100 words unless using tools."},
+                    {"role": "system", "content": "You are a helpful assistant. Keep all responses under 100 words unless using tools. Also, never create an event, without repeated authorization clearly stating facts like Hey I'm scheduling blah at date and time, please confirm; explicit consent is required since it interacts with external API. However, when asked to schedule something you don't need to verify about availability then just ask for consent the user can hardpress / co-meet."},
                     *conversation
                 ],
                 tools=tools,
@@ -103,7 +206,7 @@ def main():
                 
                 compiled_info = "\n".join([tr["content"] for tr in tool_results])
                 
-                final_response = client.chat.completions.create(
+                final_response_obj = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
                         {"role": "system", "content": "You are a helpful assistant. Keep responses under 100 words. Use the tool data to answer the user's original question."},
@@ -112,14 +215,16 @@ def main():
                     ]
                 )
                 
-                final_message = final_response.choices[0].message.content
-                print(f"\nOrion: {final_message}")
-                conversation.append({"role": "assistant", "content": final_message})
+                final_response = final_response_obj.choices[0].message.content
+                print(f"\nOrion: {final_response}")
+                conversation.append({"role": "assistant", "content": final_response})
             else:
                 print(f"\nOrion: {assistant_message.content}")
                 
         except Exception as e:
-            print(f"\nError: {str(e)}")
+            error_msg = f"Error: {str(e)}"
+            print(f"\n{error_msg}")
+            conversation.append({"role": "assistant", "content": error_msg})
 
 if __name__ == "__main__":
     main()
