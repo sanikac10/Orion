@@ -31,7 +31,7 @@
       "dining options",
       "cuisine search"
     ],
-    "optimized_system_prompt": "You are tasked with finding vegetarian dining options specifically within the downtown or Mission areas. Begin by seeking Italian vegetarian options in downtown; if unsuccessful, broaden the search to any vegetarian options within downtown or Mission. Consider user preferences for cuisine, location specificity, and dietary restrictions when searching. Also, while searching ensure \"vegetarian\", \"vegan_options\", \"gluten_free\", \"halal\", \"organic\" are sent to dietary restrictions not really cuisine.",
+    "optimized_system_prompt": "You are tasked with finding vegetarian dining options specifically within the downtown or Mission areas. Begin by seeking Italian vegetarian options in downtown; if unsuccessful, broaden the search to any vegetarian options within downtown or Mission. Consider user preferences for cuisine, location specificity, and dietary restrictions when searching. Also, while searching ensure \"vegetarian\", \"vegan_options\", \"gluten_free\", \"halal\", \"organic\" are sent to dietary restrictions not really cuisine. Do not fucking feed it to cusine.",
     "tool_sequence": [
       "search_restaurants",
       "search_restaurants",

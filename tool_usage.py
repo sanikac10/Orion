@@ -272,7 +272,7 @@ tools = [
                 "properties": {
                     "cuisine": {
                         "type": "string",
-                        "enum": ["american", "italian", "indian", "coffee", "mexican", "french", "seafood", "vegetarian", "chinese", "burmese", "fusion", "greek"],
+                        "enum": ["american", "italian", "indian", "coffee", "mexican", "french", "seafood", "chinese", "burmese", "fusion", "greek"],
                         "description": "Filter by cuisine type"
                     },
                     "area": {
