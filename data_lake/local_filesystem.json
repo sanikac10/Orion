@@ -1,0 +1,290 @@
+{
+    "files": [
+      {
+        "path": "/Downloads/security_audit_report_jan16.pdf",
+        "size_mb": 3.2,
+        "created": "2024-01-16T16:32:00Z",
+        "modified": "2024-01-16T16:32:00Z",
+        "extension": ".pdf",
+        "mime_type": "application/pdf",
+        "access_count": 4,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/auth_refactor_notes.md",
+        "size_mb": 0.05,
+        "created": "2024-01-18T11:30:00Z",
+        "modified": "2024-01-18T15:20:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 8,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/auth_postmortem_jan19.md",
+        "size_mb": 0.12,
+        "created": "2024-01-19T09:15:00Z",
+        "modified": "2024-01-19T17:30:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 6,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/src/auth/jwt_handler.py",
+        "size_mb": 0.016,
+        "created": "2023-08-15T14:30:00Z",
+        "modified": "2024-01-16T22:45:00Z",
+        "extension": ".py",
+        "mime_type": "text/x-python",
+        "access_count": 47,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/config/monitoring.yml",
+        "size_mb": 0.004,
+        "created": "2023-10-05T10:15:00Z",
+        "modified": "2024-01-17T15:30:00Z",
+        "extension": ".yml",
+        "mime_type": "text/yaml",
+        "access_count": 12,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/src/api/auth.py",
+        "size_mb": 0.017,
+        "created": "2023-06-15T12:00:00Z",
+        "modified": "2024-01-16T19:30:00Z",
+        "extension": ".py",
+        "mime_type": "text/x-python",
+        "access_count": 29,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/tests/auth/test_jwt.py",
+        "size_mb": 0.014,
+        "created": "2023-08-16T10:30:00Z",
+        "modified": "2024-01-18T13:45:00Z",
+        "extension": ".py",
+        "mime_type": "text/x-python",
+        "access_count": 22,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/tests/integration/auth_flow.py",
+        "size_mb": 0.020,
+        "created": "2023-09-12T16:45:00Z",
+        "modified": "2024-01-17T14:15:00Z",
+        "extension": ".py",
+        "mime_type": "text/x-python",
+        "access_count": 21,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/docs/security/auth_procedures.md",
+        "size_mb": 0.009,
+        "created": "2024-01-19T16:00:00Z",
+        "modified": "2024-01-19T17:30:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 3,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/docs/api/authentication.md",
+        "size_mb": 0.013,
+        "created": "2023-07-15T14:00:00Z",
+        "modified": "2024-01-19T11:30:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 16,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Desktop/debug_session_jan16.txt",
+        "size_mb": 0.024,
+        "created": "2024-01-16T18:30:00Z",
+        "modified": "2024-01-16T23:15:00Z",
+        "extension": ".txt",
+        "mime_type": "text/plain",
+        "access_count": 11,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Downloads/jwt_security_best_practices.pdf",
+        "size_mb": 1.8,
+        "created": "2024-01-15T14:45:00Z",
+        "modified": "2024-01-15T14:45:00Z",
+        "extension": ".pdf",
+        "mime_type": "application/pdf",
+        "access_count": 7,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/meeting_notes_emergency_jan15.md",
+        "size_mb": 0.008,
+        "created": "2024-01-15T09:45:00Z",
+        "modified": "2024-01-15T12:30:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 15,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Pictures/Screenshots/auth_error_screenshot.png",
+        "size_mb": 0.85,
+        "created": "2024-01-15T09:22:00Z",
+        "modified": "2024-01-15T09:22:00Z",
+        "extension": ".png",
+        "mime_type": "image/png",
+        "access_count": 9,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Backups/auth_service_backup_jan14.tar.gz",
+        "size_mb": 24.7,
+        "created": "2024-01-14T23:30:00Z",
+        "modified": "2024-01-14T23:30:00Z",
+        "extension": ".tar.gz",
+        "mime_type": "application/gzip",
+        "access_count": 2,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/personal/expenses_jan2024.xlsx",
+        "size_mb": 0.15,
+        "created": "2024-01-01T10:00:00Z",
+        "modified": "2024-01-19T20:15:00Z",
+        "extension": ".xlsx",
+        "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "access_count": 4,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Desktop/temp_jwt_tokens.json",
+        "size_mb": 0.003,
+        "created": "2024-01-16T20:15:00Z",
+        "modified": "2024-01-16T21:45:00Z",
+        "extension": ".json",
+        "mime_type": "application/json",
+        "access_count": 13,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/.env",
+        "size_mb": 0.001,
+        "created": "2023-08-10T11:00:00Z",
+        "modified": "2024-01-17T09:30:00Z",
+        "extension": ".env",
+        "mime_type": "text/plain",
+        "access_count": 8,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Downloads/python_jwt_library_docs.html",
+        "size_mb": 0.45,
+        "created": "2024-01-15T16:20:00Z",
+        "modified": "2024-01-15T16:20:00Z",
+        "extension": ".html",
+        "mime_type": "text/html",
+        "access_count": 5,
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/work/auth_crisis_timeline.md",
+        "size_mb": 0.018,
+        "created": "2024-01-19T10:30:00Z",
+        "modified": "2024-01-19T16:45:00Z",
+        "extension": ".md",
+        "mime_type": "text/markdown",
+        "access_count": 12,
+        "owner": "Aman Priyanshu"
+      }
+    ],
+    "directories": [
+      {
+        "path": "/Downloads",
+        "file_count": 47,
+        "total_size_mb": 128.3,
+        "last_accessed": "2024-01-16T16:32:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents",
+        "file_count": 89,
+        "total_size_mb": 45.8,
+        "last_accessed": "2024-01-19T20:15:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/personal",
+        "file_count": 23,
+        "total_size_mb": 12.4,
+        "last_accessed": "2024-01-19T20:15:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Documents/work",
+        "file_count": 34,
+        "total_size_mb": 18.7,
+        "last_accessed": "2024-01-19T16:45:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service",
+        "file_count": 67,
+        "total_size_mb": 8.9,
+        "last_accessed": "2024-01-19T17:30:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/src",
+        "file_count": 23,
+        "total_size_mb": 3.2,
+        "last_accessed": "2024-01-16T22:45:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/src/auth",
+        "file_count": 8,
+        "total_size_mb": 0.8,
+        "last_accessed": "2024-01-16T22:45:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/tests",
+        "file_count": 15,
+        "total_size_mb": 1.4,
+        "last_accessed": "2024-01-18T13:45:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Code/auth-service/docs",
+        "file_count": 12,
+        "total_size_mb": 0.9,
+        "last_accessed": "2024-01-19T17:30:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Desktop",
+        "file_count": 28,
+        "total_size_mb": 67.2,
+        "last_accessed": "2024-01-16T21:45:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Pictures/Screenshots",
+        "file_count": 156,
+        "total_size_mb": 234.6,
+        "last_accessed": "2024-01-15T09:22:00Z",
+        "owner": "Aman Priyanshu"
+      },
+      {
+        "path": "/Backups",
+        "file_count": 18,
+        "total_size_mb": 1247.8,
+        "last_accessed": "2024-01-14T23:30:00Z",
+        "owner": "Aman Priyanshu"
+      }
+    ]
+  }

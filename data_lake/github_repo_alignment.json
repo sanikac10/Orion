@@ -1,0 +1,266 @@
+{
+    "files": [
+      {
+        "path": "/src/auth/jwt_handler.py",
+        "size_kb": 15.8,
+        "lines": 298,
+        "created": "2023-08-15T14:30:00Z",
+        "last_modified": "2024-01-16T22:45:00Z",
+        "language": "python",
+        "commits_count": 47,
+        "contributors": ["aman", "alex", "sarah", "john"]
+      },
+      {
+        "path": "/config/monitoring.yml",
+        "size_kb": 4.2,
+        "lines": 89,
+        "created": "2023-10-05T10:15:00Z",
+        "last_modified": "2024-01-17T15:30:00Z",
+        "language": "yaml",
+        "commits_count": 12,
+        "contributors": ["david", "maria", "aman"]
+      },
+      {
+        "path": "/docs/security/auth_procedures.md",
+        "size_kb": 8.9,
+        "lines": 145,
+        "created": "2024-01-19T16:00:00Z",
+        "last_modified": "2024-01-19T17:30:00Z",
+        "language": "markdown",
+        "commits_count": 3,
+        "contributors": ["john", "maria"]
+      },
+      {
+        "path": "/src/api/users.py",
+        "size_kb": 22.4,
+        "lines": 412,
+        "created": "2023-05-12T09:00:00Z",
+        "last_modified": "2024-01-14T11:22:00Z",
+        "language": "python",
+        "commits_count": 38,
+        "contributors": ["aman", "sarah", "john", "alex"]
+      },
+      {
+        "path": "/src/auth/login.py",
+        "size_kb": 12.4,
+        "lines": 234,
+        "created": "2023-06-20T13:45:00Z",
+        "last_modified": "2024-01-15T16:30:00Z",
+        "language": "python",
+        "commits_count": 25,
+        "contributors": ["aman", "sarah", "alex"]
+      },
+      {
+        "path": "/frontend/src/components/LoginForm.tsx",
+        "size_kb": 9.1,
+        "lines": 187,
+        "created": "2023-07-08T11:20:00Z",
+        "last_modified": "2024-01-12T09:15:00Z",
+        "language": "typescript",
+        "commits_count": 19,
+        "contributors": ["maria", "john", "aman"]
+      },
+      {
+        "path": "/src/db/models/user.py",
+        "size_kb": 18.7,
+        "lines": 345,
+        "created": "2023-04-25T15:00:00Z",
+        "last_modified": "2024-01-08T14:20:00Z",
+        "language": "python",
+        "commits_count": 33,
+        "contributors": ["aman", "sarah", "former_dev"]
+      },
+      {
+        "path": "/tests/auth/test_jwt.py",
+        "size_kb": 14.3,
+        "lines": 267,
+        "created": "2023-08-16T10:30:00Z",
+        "last_modified": "2024-01-18T13:45:00Z",
+        "language": "python",
+        "commits_count": 22,
+        "contributors": ["alex", "john", "sarah"]
+      },
+      {
+        "path": "/src/api/auth.py",
+        "size_kb": 16.9,
+        "lines": 312,
+        "created": "2023-06-15T12:00:00Z",
+        "last_modified": "2024-01-16T19:30:00Z",
+        "language": "python",
+        "commits_count": 29,
+        "contributors": ["sarah", "aman", "alex"]
+      },
+      {
+        "path": "/frontend/src/hooks/useAuth.ts",
+        "size_kb": 5.8,
+        "lines": 124,
+        "created": "2023-09-03T14:15:00Z",
+        "last_modified": "2024-01-13T16:45:00Z",
+        "language": "typescript",
+        "commits_count": 15,
+        "contributors": ["maria", "john"]
+      },
+      {
+        "path": "/config/database.yml",
+        "size_kb": 2.1,
+        "lines": 45,
+        "created": "2023-03-10T08:00:00Z",
+        "last_modified": "2023-12-15T10:30:00Z",
+        "language": "yaml",
+        "commits_count": 8,
+        "contributors": ["david", "aman", "former_dev"]
+      },
+      {
+        "path": "/scripts/deploy.sh",
+        "size_kb": 3.7,
+        "lines": 78,
+        "created": "2023-04-01T16:20:00Z",
+        "last_modified": "2024-01-05T12:00:00Z",
+        "language": "shell",
+        "commits_count": 11,
+        "contributors": ["david", "aman"]
+      },
+      {
+        "path": "/src/db/migrations/001_create_users.sql",
+        "size_kb": 1.9,
+        "lines": 42,
+        "created": "2023-03-15T09:30:00Z",
+        "last_modified": "2023-03-15T09:30:00Z",
+        "language": "sql",
+        "commits_count": 1,
+        "contributors": ["former_dev"]
+      },
+      {
+        "path": "/frontend/src/pages/Dashboard.tsx",
+        "size_kb": 28.4,
+        "lines": 521,
+        "created": "2023-08-22T11:00:00Z",
+        "last_modified": "2024-01-10T15:20:00Z",
+        "language": "typescript",
+        "commits_count": 45,
+        "contributors": ["maria", "john", "aman", "alex"]
+      },
+      {
+        "path": "/src/utils/logger.py",
+        "size_kb": 6.2,
+        "lines": 135,
+        "created": "2023-05-08T13:15:00Z",
+        "last_modified": "2023-11-20T09:45:00Z",
+        "language": "python",
+        "commits_count": 7,
+        "contributors": ["david", "aman"]
+      },
+      {
+        "path": "/docs/api/authentication.md",
+        "size_kb": 12.6,
+        "lines": 203,
+        "created": "2023-07-15T14:00:00Z",
+        "last_modified": "2024-01-19T11:30:00Z",
+        "language": "markdown",
+        "commits_count": 16,
+        "contributors": ["sarah", "john", "consultant"]
+      },
+      {
+        "path": "/tests/integration/auth_flow.py",
+        "size_kb": 19.8,
+        "lines": 378,
+        "created": "2023-09-12T16:45:00Z",
+        "last_modified": "2024-01-17T14:15:00Z",
+        "language": "python",
+        "commits_count": 21,
+        "contributors": ["alex", "sarah", "john"]
+      },
+      {
+        "path": "/frontend/package.json",
+        "size_kb": 2.8,
+        "lines": 67,
+        "created": "2023-03-01T10:00:00Z",
+        "last_modified": "2024-01-11T08:30:00Z",
+        "language": "json",
+        "commits_count": 34,
+        "contributors": ["maria", "john", "aman", "former_dev"]
+      },
+      {
+        "path": "/src/middleware/cors.py",
+        "size_kb": 4.1,
+        "lines": 89,
+        "created": "2023-06-30T15:30:00Z",
+        "last_modified": "2023-10-12T11:20:00Z",
+        "language": "python",
+        "commits_count": 5,
+        "contributors": ["aman", "david"]
+      },
+      {
+        "path": "/.github/workflows/ci.yml",
+        "size_kb": 3.4,
+        "lines": 72,
+        "created": "2023-03-20T12:00:00Z",
+        "last_modified": "2024-01-03T14:45:00Z",
+        "language": "yaml",
+        "commits_count": 18,
+        "contributors": ["david", "aman", "sarah"]
+      }
+    ],
+    "dependencies": [
+      {
+        "package": "fastapi",
+        "version": "0.104.1",
+        "last_updated": "2024-01-12T10:00:00Z",
+        "used_in_files": ["/src/api/users.py", "/src/api/auth.py", "/src/auth/login.py"]
+      },
+      {
+        "package": "pyjwt",
+        "version": "2.8.0",
+        "last_updated": "2024-01-15T16:30:00Z",
+        "used_in_files": ["/src/auth/jwt_handler.py", "/src/auth/login.py", "/src/api/auth.py"]
+      },
+      {
+        "package": "sqlalchemy",
+        "version": "2.0.23",
+        "last_updated": "2023-12-20T09:15:00Z",
+        "used_in_files": ["/src/db/models/user.py", "/src/api/users.py"]
+      },
+      {
+        "package": "react",
+        "version": "18.2.0",
+        "last_updated": "2024-01-11T08:30:00Z",
+        "used_in_files": ["/frontend/src/components/LoginForm.tsx", "/frontend/src/pages/Dashboard.tsx"]
+      },
+      {
+        "package": "typescript",
+        "version": "5.3.2",
+        "last_updated": "2024-01-11T08:30:00Z",
+        "used_in_files": ["/frontend/src/components/LoginForm.tsx", "/frontend/src/hooks/useAuth.ts", "/frontend/src/pages/Dashboard.tsx"]
+      },
+      {
+        "package": "pytest",
+        "version": "7.4.3",
+        "last_updated": "2023-11-10T14:20:00Z",
+        "used_in_files": ["/tests/auth/test_jwt.py", "/tests/integration/auth_flow.py"]
+      },
+      {
+        "package": "redis",
+        "version": "5.0.1",
+        "last_updated": "2024-01-08T11:45:00Z",
+        "used_in_files": ["/src/auth/jwt_handler.py", "/src/middleware/cors.py"]
+      },
+      {
+        "package": "pydantic",
+        "version": "2.5.2",
+        "last_updated": "2024-01-05T13:30:00Z",
+        "used_in_files": ["/src/api/users.py", "/src/db/models/user.py", "/src/api/auth.py"]
+      },
+      {
+        "package": "uvicorn",
+        "version": "0.24.0",
+        "last_updated": "2023-12-28T16:00:00Z",
+        "used_in_files": ["/scripts/deploy.sh"]
+      },
+      {
+        "package": "axios",
+        "version": "1.6.2",
+        "last_updated": "2024-01-11T08:30:00Z",
+        "used_in_files": ["/frontend/src/hooks/useAuth.ts", "/frontend/src/components/LoginForm.tsx"]
+      }
+    ]
+  }

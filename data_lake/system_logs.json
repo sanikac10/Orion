@@ -1,0 +1,417 @@
+{
+    "logs": [
+      {
+        "timestamp": "2024-01-15T09:15:00Z",
+        "level": "ERROR",
+        "service": "auth-service",
+        "message": "JWT validation failed: signature verification error for token ending in ...xY2z. Invalid signing algorithm detected: RS256 expected, HS256 received. Origin: 192.168.1.45, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36, Session: sess_a8f3d2e1b9c4",
+        "count": 23,
+        "error_code": "AUTH_JWT_001",
+        "stack_trace": "at validateJwtSignature (jwt_handler.py:45)\nat authenticateUser (auth_service.py:128)\nat processRequest (middleware.py:67)"
+      },
+      {
+        "timestamp": "2024-01-15T14:25:00Z",
+        "level": "CRITICAL",
+        "service": "auth-service",
+        "message": "Authentication service error threshold exceeded: 156 failures in 5 minutes. Error rate: 78.3% (156/199 requests). JWT validation failures correlating with client sessions from IP range 192.168.1.0/24. Circuit breaker activated. Incident ID: INC-20240115-001",
+        "count": 156,
+        "error_code": "AUTH_CIRCUIT_BREAK",
+        "metrics": {
+          "error_rate": 78.3,
+          "failed_requests": 156,
+          "total_requests": 199,
+          "avg_response_time": 1250
+        }
+      },
+      {
+        "timestamp": "2024-01-17T16:00:00Z",
+        "level": "INFO",
+        "service": "monitoring-service",
+        "message": "Auto-scaling triggered for auth-service: scaling from 2 to 5 instances due to elevated error rate and CPU usage >85%. New instances: auth-srv-03, auth-srv-04, auth-srv-05 provisioned in us-west-2a, us-west-2b. Load balancer updated. Estimated scaling time: 3-5 minutes",
+        "count": 1,
+        "scaling_event": {
+          "previous_instances": 2,
+          "new_instances": 5,
+          "trigger_metric": "cpu_usage",
+          "trigger_value": 87.2,
+          "region": "us-west-2"
+        }
+      },
+      {
+        "timestamp": "2024-01-18T10:30:00Z",
+        "level": "INFO",
+        "service": "auth-service",
+        "message": "Authentication service stabilizing: error rate decreased to 12.4% (31/249 requests) in last 15 minutes. JWT validation fixes deployed to all instances. Token refresh mechanism operational. Active sessions: 1,247. Circuit breaker status: HALF_OPEN. Recovery progress: 78%",
+        "count": 31,
+        "recovery_metrics": {
+          "error_rate": 12.4,
+          "failed_requests": 31,
+          "total_requests": 249,
+          "active_sessions": 1247,
+          "circuit_breaker": "HALF_OPEN",
+          "recovery_percentage": 78
+        }
+      },
+      {
+        "timestamp": "2024-01-18T19:45:00Z",
+        "level": "INFO",
+        "service": "auth-service",
+        "message": "Full recovery achieved: all authentication metrics within normal parameters. Error rate: 0.8% (2/247 requests - within SLA threshold of 1%). JWT validation: 100% success rate. Token refresh latency: 45ms avg. Circuit breaker: CLOSED. Active sessions: 1,389. Incident INC-20240115-001 resolved.",
+        "count": 2,
+        "recovery_complete": {
+          "error_rate": 0.8,
+          "failed_requests": 2,
+          "total_requests": 247,
+          "jwt_success_rate": 100.0,
+          "avg_token_refresh_latency": 45,
+          "circuit_breaker": "CLOSED",
+          "active_sessions": 1389,
+          "incident_id": "INC-20240115-001"
+        }
+      },
+      {
+        "timestamp": "2024-01-15T08:30:00Z",
+        "level": "INFO",
+        "service": "monitoring-service",
+        "message": "Daily system health check initiated. Scanning 8 services across 3 availability zones. Previous 24h uptime: 99.97%. Memory usage avg: 67.2%, CPU avg: 54.1%",
+        "count": 1,
+        "health_check": {
+          "services_scanned": 8,
+          "availability_zones": 3,
+          "uptime_24h": 99.97,
+          "avg_memory": 67.2,
+          "avg_cpu": 54.1
+        }
+      },
+      {
+        "timestamp": "2024-01-15T11:42:00Z",
+        "level": "WARN",
+        "service": "database",
+        "message": "Connection pool utilization high: 16/20 connections active (80%). Longest running query: SELECT user_id, permissions FROM auth_tokens WHERE expires_at > NOW() - duration: 1.8s. Queue depth: 7 queries waiting",
+        "count": 16,
+        "db_metrics": {
+          "active_connections": 16,
+          "max_connections": 20,
+          "utilization": 80.0,
+          "longest_query_duration": 1.8,
+          "queue_depth": 7
+        }
+      },
+      {
+        "timestamp": "2024-01-15T16:15:00Z",
+        "level": "ERROR",
+        "service": "api-gateway",
+        "message": "Rate limit exceeded for client IP 203.0.113.45: 1,247 requests in 60 seconds (limit: 1,000). User-Agent: python-requests/2.28.1. Endpoint: /api/v1/auth/validate. Blocking for 300 seconds",
+        "count": 247,
+        "rate_limit": {
+          "client_ip": "203.0.113.45",
+          "requests_per_minute": 1247,
+          "limit": 1000,
+          "endpoint": "/api/v1/auth/validate",
+          "block_duration": 300
+        }
+      },
+      {
+        "timestamp": "2024-01-16T07:00:00Z",
+        "level": "INFO",
+        "service": "load-balancer",
+        "message": "Weekly load balancer statistics: Total requests: 2,847,392. Average response time: 245ms. Successful requests: 98.2%. Top endpoint: /api/v1/user/profile (34.7% of traffic)",
+        "count": 2847392,
+        "weekly_stats": {
+          "total_requests": 2847392,
+          "avg_response_time": 245,
+          "success_rate": 98.2,
+          "top_endpoint": "/api/v1/user/profile",
+          "top_endpoint_percentage": 34.7
+        }
+      },
+      {
+        "timestamp": "2024-01-16T13:20:00Z",
+        "level": "DEBUG",
+        "service": "redis-cache",
+        "message": "Cache performance analysis: Hit ratio: 89.3% (8,934/10,012 requests). Memory usage: 2.1GB/4GB (52.5%). Most accessed keys: user_session:*, auth_token:*. Eviction events: 23 in last hour",
+        "count": 10012,
+        "cache_stats": {
+          "hit_ratio": 89.3,
+          "hits": 8934,
+          "total_requests": 10012,
+          "memory_used_gb": 2.1,
+          "memory_total_gb": 4.0,
+          "memory_usage_percent": 52.5,
+          "evictions_last_hour": 23
+        }
+      },
+      {
+        "timestamp": "2024-01-16T19:33:00Z",
+        "level": "WARN",
+        "service": "payment-service",
+        "message": "Transaction processing delay detected: Payment ID pmt_4x9k2m1n processing for 45 seconds. External gateway timeout from stripe.com. Customer: cust_abc123. Amount: $89.50 USD. Retry attempt 2/3",
+        "count": 1,
+        "payment_details": {
+          "payment_id": "pmt_4x9k2m1n",
+          "processing_duration": 45,
+          "gateway": "stripe.com",
+          "customer_id": "cust_abc123",
+          "amount": "$89.50",
+          "currency": "USD",
+          "retry_attempt": 2,
+          "max_retries": 3
+        }
+      },
+      {
+        "timestamp": "2024-01-17T09:45:00Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "User profile update failed: validation error for user_id: usr_8h3k9x2p. Invalid email format: 'aman.priyanshu@invalid..domain'. Field: email_address. Request from IP: 10.0.1.23. Session: sess_valid_abc123",
+        "count": 1,
+        "validation_error": {
+          "user_id": "usr_8h3k9x2p",
+          "invalid_email": "aman.priyanshu@invalid..domain",
+          "error_field": "email_address",
+          "client_ip": "10.0.1.23",
+          "session_id": "sess_valid_abc123"
+        }
+      },
+      {
+        "timestamp": "2024-01-17T12:15:00Z",
+        "level": "INFO",
+        "service": "database",
+        "message": "Database maintenance window completed successfully. Index rebuild on auth_tokens table: 2.3 million rows processed in 18 minutes. Query performance improved by 23%. No downtime experienced",
+        "count": 2300000,
+        "maintenance": {
+          "table": "auth_tokens",
+          "rows_processed": 2300000,
+          "duration_minutes": 18,
+          "performance_improvement": 23.0,
+          "downtime": 0
+        }
+      },
+      {
+        "timestamp": "2024-01-17T20:10:00Z",
+        "level": "WARN",
+        "service": "monitoring-service",
+        "message": "Disk usage warning on server auth-srv-02: 87.3% utilization (/var/log partition). Log files consuming 3.2GB. Oldest logs: 2024-01-10. Auto-cleanup triggered for logs older than 7 days",
+        "count": 1,
+        "disk_warning": {
+          "server": "auth-srv-02",
+          "disk_usage": 87.3,
+          "partition": "/var/log",
+          "log_size_gb": 3.2,
+          "oldest_log_date": "2024-01-10",
+          "cleanup_threshold_days": 7
+        }
+      },
+      {
+        "timestamp": "2024-01-18T06:30:00Z",
+        "level": "INFO",
+        "service": "api-gateway",
+        "message": "API Gateway startup sequence initiated. Loading 47 route configurations. SSL certificates verified for *.company.com. Health check endpoints registered. Estimated startup time: 45 seconds",
+        "count": 47,
+        "startup": {
+          "routes_loaded": 47,
+          "ssl_domain": "*.company.com",
+          "ssl_status": "verified",
+          "estimated_startup_seconds": 45
+        }
+      },
+      {
+        "timestamp": "2024-01-18T14:22:00Z",
+        "level": "DEBUG",
+        "service": "redis-cache",
+        "message": "Background cache optimization completed. Compressed 1,247 expired session keys. Memory freed: 156MB. Defragmentation reduced memory fragmentation from 12.3% to 3.8%. Next optimization: 2024-01-19T14:22:00Z",
+        "count": 1247,
+        "optimization": {
+          "expired_keys_removed": 1247,
+          "memory_freed_mb": 156,
+          "fragmentation_before": 12.3,
+          "fragmentation_after": 3.8,
+          "next_optimization": "2024-01-19T14:22:00Z"
+        }
+      },
+      {
+        "timestamp": "2024-01-19T08:00:00Z",
+        "level": "INFO",
+        "service": "load-balancer",
+        "message": "Health check passed for all backend services. auth-service: 5/5 instances healthy. api-gateway: 3/3 instances healthy. user-service: 2/2 instances healthy. Average response times within SLA",
+        "count": 10,
+        "health_status": {
+          "auth_service_healthy": 5,
+          "auth_service_total": 5,
+          "api_gateway_healthy": 3,
+          "api_gateway_total": 3,
+          "user_service_healthy": 2,
+          "user_service_total": 2,
+          "sla_compliance": true
+        }
+      },
+      {
+        "timestamp": "2024-01-19T11:35:00Z",
+        "level": "WARN",
+        "service": "payment-service",
+        "message": "Unusual payment pattern detected: 23 transactions from user usr_8h3k9x2p totaling $1,247.83 in 2 hours. Risk score: 78/100. Transactions flagged for manual review. Account: temporarily limited pending verification",
+        "count": 23,
+        "fraud_detection": {
+          "user_id": "usr_8h3k9x2p",
+          "transaction_count": 23,
+          "total_amount": "$1,247.83",
+          "time_window_hours": 2,
+          "risk_score": 78,
+          "max_risk_score": 100,
+          "account_status": "temporarily_limited"
+        }
+      },
+      {
+        "timestamp": "2024-01-19T17:50:00Z",
+        "level": "INFO",
+        "service": "monitoring-service",
+        "message": "Weekly system report generated: Total uptime: 99.94%. Auth crisis incident duration: 57 hours 30 minutes (resolved). Performance improvements post-incident: 15% faster auth validation, 23% better database query performance. Next review: 2024-01-26",
+        "count": 1,
+        "weekly_report": {
+          "uptime_percentage": 99.94,
+          "incident_duration_hours": 57.5,
+          "incident_status": "resolved",
+          "auth_performance_improvement": 15.0,
+          "db_performance_improvement": 23.0,
+          "next_review_date": "2024-01-26"
+        }
+      }
+    ],
+    "metrics": [
+      {
+        "timestamp": "2024-01-15T08:30:00Z",
+        "metric": "memory_usage",
+        "value": 67.2,
+        "threshold": 80.0,
+        "service": "monitoring-service",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-15T09:15:00Z",
+        "metric": "error_rate",
+        "value": 34.8,
+        "threshold": 5.0,
+        "service": "auth-service",
+        "status": "critical"
+      },
+      {
+        "timestamp": "2024-01-15T11:42:00Z",
+        "metric": "database_connections",
+        "value": 16,
+        "threshold": 18,
+        "service": "database",
+        "status": "warning"
+      },
+      {
+        "timestamp": "2024-01-15T14:25:00Z",
+        "metric": "api_response_time",
+        "value": 1250,
+        "threshold": 500,
+        "service": "auth-service",
+        "status": "critical"
+      },
+      {
+        "timestamp": "2024-01-15T16:15:00Z",
+        "metric": "requests_per_second",
+        "value": 20.8,
+        "threshold": 16.7,
+        "service": "api-gateway",
+        "status": "warning"
+      },
+      {
+        "timestamp": "2024-01-16T07:00:00Z",
+        "metric": "api_response_time",
+        "value": 245,
+        "threshold": 500,
+        "service": "load-balancer",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-16T13:20:00Z",
+        "metric": "cache_hit_ratio",
+        "value": 89.3,
+        "threshold": 85.0,
+        "service": "redis-cache",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-17T09:45:00Z",
+        "metric": "error_rate",
+        "value": 2.1,
+        "threshold": 5.0,
+        "service": "user-service",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-17T16:00:00Z",
+        "metric": "cpu_usage",
+        "value": 87.2,
+        "threshold": 80.0,
+        "service": "auth-service",
+        "status": "warning"
+      },
+      {
+        "timestamp": "2024-01-17T20:10:00Z",
+        "metric": "disk_usage",
+        "value": 87.3,
+        "threshold": 85.0,
+        "service": "monitoring-service",
+        "status": "warning"
+      },
+      {
+        "timestamp": "2024-01-18T06:30:00Z",
+        "metric": "api_response_time",
+        "value": 89,
+        "threshold": 500,
+        "service": "api-gateway",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-18T10:30:00Z",
+        "metric": "error_rate",
+        "value": 12.4,
+        "threshold": 5.0,
+        "service": "auth-service",
+        "status": "warning"
+      },
+      {
+        "timestamp": "2024-01-18T14:22:00Z",
+        "metric": "memory_usage",
+        "value": 45.2,
+        "threshold": 80.0,
+        "service": "redis-cache",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-18T19:45:00Z",
+        "metric": "error_rate",
+        "value": 0.8,
+        "threshold": 5.0,
+        "service": "auth-service",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-19T08:00:00Z",
+        "metric": "api_response_time",
+        "value": 156,
+        "threshold": 500,
+        "service": "load-balancer",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-19T11:35:00Z",
+        "metric": "requests_per_second",
+        "value": 11.5,
+        "threshold": 16.7,
+        "service": "payment-service",
+        "status": "healthy"
+      },
+      {
+        "timestamp": "2024-01-19T17:50:00Z",
+        "metric": "cpu_usage",
+        "value": 54.3,
+        "threshold": 80.0,
+        "service": "monitoring-service",
+        "status": "healthy"
+      }
+    ]
+  }
