@@ -27,14 +27,16 @@ class ChatRequest(BaseModel):
     userId: str = Field(default="default_user", description="User identifier")
 
 class ChatResponse(BaseModel):
-    success: bool = Field(..., description="Whether the request was successful")
-    messageId: str = Field(..., description="Unique message identifier")
-    sessionId: str = Field(..., description="Session identifier")
-    isLearningMode: bool = Field(..., description="Whether AI is in learning or cached mode")
-    patternMatchConfidence: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Confidence in pattern match (0-1)")
-    turnsReduced: Optional[int] = Field(default=None, ge=0, description="Number of turns saved by using cached pattern")
-    taskFamily: Optional[Dict[str, Any]] = Field(default=None, description="Task classification and metadata")
-    error: Optional[str] = Field(default=None, description="Error message if request failed")
+    success: bool
+    messageId: str
+    sessionId: str
+    response: Optional[str] = None  # Make sure this field exists!
+    isLearningMode: bool = True
+    patternMatchConfidence: Optional[float] = None
+    turnsReduced: Optional[int] = None
+    taskFamily: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
+
 
 # ============================================================================
 # LEARNING SYSTEM MODELS
