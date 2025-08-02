@@ -145,7 +145,7 @@ class LearningAgent:
         self.example_threads_dir.mkdir(exist_ok=True)
         
         # Set data directory to correct location
-        self.data_dir = orion_root / "data-lake"
+        self.data_dir = orion_root / "data_lake"
         print(f"📁 Data directory: {self.data_dir}")
     
     def set_openai_client(self, api_key: str):

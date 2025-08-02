@@ -643,9 +643,10 @@ async def system_diagnostics():
             "available_tool_categories": agent_stats["gepa_specific"]["available_tool_categories"]
         },
         "file_system_check": {
-            "orion_directory_exists": Path("Orion").exists(),
-            "amans_cli_file_exists": Path("Orion/amans_cli_orion.py").exists(),
-            "tool_usage_file_exists": Path("Orion/tool_usage.py").exists(),
+            "parent_directory": str(Path(__file__).parent.parent.parent),
+            "amans_cli_file_exists": (Path(__file__).parent.parent.parent / "amans_cli_orion.py").exists(),
+            "gepa_file_exists": (Path(__file__).parent.parent.parent / "gepa.py").exists(),
+            "data_lake_directory": (Path(__file__).parent.parent.parent / "data_lake").exists(),
             "example_threads_directory": Path("example_threads").exists()
         }
     }
@@ -661,26 +662,34 @@ async def startup_event():
     print("=" * 60)
     
     # Check for required GEPA files
-    orion_dir = Path("Orion")
-    amans_cli_file = orion_dir / "amans_cli_orion.py"
-    tool_usage_file = orion_dir / "tool_usage.py"
-    
+    # Check for required GEPA files (in parent directory like run.py does)
+    parent_dir = Path(__file__).parent.parent.parent  # Go up to orion/ (since main.py is in app/)
+    amans_cli_file = parent_dir / "amans_cli_orion.py" 
+    gepa_file = parent_dir / "gepa.py"
+
     print("🔍 Checking GEPA integration files...")
-    if orion_dir.exists():
-        print(f"✅ Orion directory found: {orion_dir}")
-    else:
-        print(f"❌ Orion directory not found: {orion_dir}")
-    
+    print(f"🔍 Looking for GEPA files in: {parent_dir}")
+
     if amans_cli_file.exists():
         print(f"✅ GEPA core file found: {amans_cli_file}")
     else:
         print(f"❌ GEPA core file missing: {amans_cli_file}")
-    
-    if tool_usage_file.exists():
-        print(f"✅ GEPA tools file found: {tool_usage_file}")
+
+    if gepa_file.exists():
+        print(f"✅ GEPA tools file found: {gepa_file}")
     else:
-        print(f"❌ GEPA tools file missing: {tool_usage_file}")
-    
+        print(f"❌ GEPA tools file missing: {gepa_file}")
+
+    # Also check data directory
+    data_dir = parent_dir / "data_lake"
+    if data_dir.exists():
+        print(f"✅ Data directory found: {data_dir}")
+        json_files = list(data_dir.glob("*.json"))
+        print(f"📊 Found {len(json_files)} JSON data files")
+    else:
+        print(f"❌ Data directory not found: {data_dir}")
+
+
     # Initialize OpenAI client
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if openai_api_key:

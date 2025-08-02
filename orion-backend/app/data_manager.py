@@ -8,9 +8,9 @@ from datetime import datetime
 class DataManager:
     def __init__(self, data_directory: str = None):
         if data_directory is None:
-            # Point to the correct data-lake directory
+            # Point to the correct data lake directory
             project_root = Path(__file__).parent.parent.parent  # Go up to orion/
-            self.data_dir = project_root / "data-lake"
+            self.data_dir = project_root / "data_lake"
         else:
             self.data_dir = Path(data_directory)
         
@@ -22,11 +22,11 @@ class DataManager:
     def load_all_data(self):
         """Load all JSON files into memory for fast access"""
         json_files = [
-            "code_context.json",
+            "code_contexts.json",
             "emails.json", 
             "github_repo_alignment.json",
             "local_filesystem.json",
-            "restaurants.json",
+            "restaurant.json",
             "system_logs.json",
             "transactions.json"
         ]
