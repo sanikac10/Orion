@@ -1,0 +1,25 @@
+{
+  "generic_contextual_data_aggregator": {
+    "tool_name": "generic_contextual_data_aggregator",
+    "objective": "Gather comprehensive information and context from various sources to support informed decision-making.",
+    "trigger_patterns": [
+      "schedule meeting",
+      "check availability",
+      "find suitable time",
+      "email analysis",
+      "retrieve emails",
+      "context gathering"
+    ],
+    "optimized_system_prompt": "This tool gathers and synthesizes information from multiple data sources such as calendar events and emails to provide detailed insights for decision-making. It ensures the collection of comprehensive context, validates necessary information, and requests any missing details from the user without altering any data.",
+    "tool_sequence": [
+      "get_events_by_timeframe",
+      "get_emails_by_sender"
+    ],
+    "context_handling_instructions": "Combine data from calendar events and emails to analyze available times and context. Use findings from the email to influence scheduling suggestions without attempting to schedule or alter any events.",
+    "max_internal_turns": 3,
+    "success_criteria": "The tool successfully provides a detailed analysis of schedules and email context, leading to informed decision-making.",
+    "fallback_strategy": "If information is missing or unclear, the tool should ask the user for the necessary details and provide an intermediate summary of current findings.",
+    "created_at": "2025-08-02T15:40:06.168817",
+    "source_workflow_complexity": 8
+  }
+}
