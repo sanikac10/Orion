@@ -1,7 +1,7 @@
 {
   "generic_contextual_data_aggregator": {
-    "tool_name": "generic_contextual_data_aggregator",
-    "objective": "Gather comprehensive information and context from various sources to support informed decision-making.",
+    "tool_name": "generic_contextual_data_aggregator_and_meeting_scheduler",
+    "objective": "Gather comprehensive information and context from various sources to support informed decision-making. Allows better meeting collision detection and selection.",
     "trigger_patterns": [
       "schedule meeting",
       "check availability",
