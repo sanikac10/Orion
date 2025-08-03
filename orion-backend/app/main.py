@@ -259,7 +259,7 @@ async def get_gepa_tools():
             "tools_by_category": tool_categories,
             "all_tools": tools,
             "gepa_integration": "✅ Active",
-            "source": "amans_cli_orion.py"
+            "source": "cli_orion.py"
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -667,7 +667,7 @@ async def system_diagnostics():
         },
         "file_system_check": {
             "parent_directory": str(Path(__file__).parent.parent.parent),
-            "amans_cli_file_exists": (Path(__file__).parent.parent.parent / "amans_cli_orion.py").exists(),
+            "amans_cli_file_exists": (Path(__file__).parent.parent.parent / "cli_orion.py").exists(),
             "gepa_file_exists": (Path(__file__).parent.parent.parent / "gepa.py").exists(),
             "data_lake_directory": (Path(__file__).parent.parent.parent / "data_lake").exists(),
             "example_threads_directory": Path("example_threads").exists()
@@ -687,7 +687,7 @@ async def startup_event():
     # Check for required GEPA files
     # Check for required GEPA files (in parent directory like run.py does)
     parent_dir = Path(__file__).parent.parent.parent  # Go up to orion/ (since main.py is in app/)
-    amans_cli_file = parent_dir / "amans_cli_orion.py" 
+    amans_cli_file = parent_dir / "cli_orion.py" 
     gepa_file = parent_dir / "gepa.py"
 
     print("🔍 Checking GEPA integration files...")

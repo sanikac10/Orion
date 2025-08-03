@@ -1,0 +1,56 @@
+{
+  "thread_id": "20250802_170018",
+  "timestamp": "2025-08-02T17:00:18.609755",
+  "turns": [
+    {
+      "turn": 1,
+      "type": "mock_turn",
+      "content": "You are Orion, a helpful AI assistant. Keep responses under 150 words unless using tools. [TESTING MODE: Using mock tools since real GEPA files are not available]"
+    },
+    {
+      "turn": 2,
+      "type": "mock_turn",
+      "content": "Find restaurents near santa clara"
+    },
+    {
+      "turn": 3,
+      "type": "mock_turn",
+      "content": "ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=[ChatCompletionMessageToolCall(id='call_HAVmtw6DGKZuhEMNZKB1sn6O', function=Function(arguments='{\"query\":\"restaurants near Santa Clara\"}', name='search_restaurants'), type='function')])"
+    },
+    {
+      "turn": 4,
+      "type": "mock_turn",
+      "content": "{\n  \"restaurants\": [\n    {\n      \"name\": \"Mock Restaurant\",\n      \"cuisine\": \"Italian\",\n      \"query\": \"restaurants near Santa Clara\"\n    }\n  ]\n}"
+    },
+    {
+      "turn": 5,
+      "type": "mock_turn",
+      "content": "One restaurant near Santa Clara is **Mock Restaurant**, which serves Italian cuisine. If you need more options or specific types of cuisine, feel free to ask!"
+    },
+    {
+      "turn": 6,
+      "type": "mock_turn",
+      "content": "Alex wants to schedule a meeting with me on 16th January, at 3pm"
+    },
+    {
+      "turn": 7,
+      "type": "mock_turn",
+      "content": "ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=[ChatCompletionMessageToolCall(id='call_gwY4WXdFicximfwEh9pg2MPG', function=Function(arguments='{\"date\":\"2024-01-16\"}', name='search_calendar_events'), type='function')])"
+    },
+    {
+      "turn": 8,
+      "type": "mock_turn",
+      "content": "{\n  \"events\": [\n    {\n      \"title\": \"Mock Meeting\",\n      \"time\": \"2PM\",\n      \"date\": \"2024-01-16\"\n    }\n  ]\n}"
+    },
+    {
+      "turn": 9,
+      "type": "mock_turn",
+      "content": "You have a **Mock Meeting** scheduled on **16th January 2024 at 2 PM**. If you want to schedule the meeting with Alex at **3 PM**, that time is available after your existing commitment. Would you like to go ahead and schedule the meeting with Alex?"
+    }
+  ],
+  "metadata": {
+    "total_turns": 9,
+    "mock_mode": true,
+    "success": true
+  }
+}

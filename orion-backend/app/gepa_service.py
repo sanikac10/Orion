@@ -12,7 +12,7 @@ sys.path.append(str(Path(__file__).parent.parent / "Orion"))
 
 # Import your friend's functions
 try:
-    from amans_cli_orion import execute_tools, save_thread, TOOL_MAP
+    from cli_orion import execute_tools, save_thread, TOOL_MAP
     from tool_usage import tools
     print("✅ Successfully imported GEPA functions")
 except ImportError as e:

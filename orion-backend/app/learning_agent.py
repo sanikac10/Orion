@@ -19,11 +19,11 @@ print(f"🔍 Looking for GEPA files in: {orion_root}")
 
 # Try to import your friend's GEPA functions with fallbacks
 try:
-    from amans_cli_orion import execute_tools, save_thread, TOOL_MAP
-    print("✅ Successfully imported GEPA functions from amans_cli_orion.py")
+    from cli_orion import execute_tools, save_thread, TOOL_MAP
+    print("✅ Successfully imported GEPA functions from cli_orion.py")
     GEPA_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ Could not import from amans_cli_orion.py: {e}")
+    print(f"⚠️ Could not import from cli_orion.py: {e}")
     GEPA_AVAILABLE = False
 
 # Try to import tools
@@ -33,7 +33,7 @@ try:
         print("✅ Successfully imported tools from tool_usage.py")
         TOOLS_AVAILABLE = True
     else:
-        raise ImportError("amans_cli_orion not available")
+        raise ImportError("cli_orion not available")
 except ImportError as e:
     print(f"⚠️ Could not import tools: {e}")
     print("🔧 Using fallback mock tools for testing")
@@ -524,7 +524,7 @@ class LearningAgent:
         missing = []
         
         expected_files = [
-            orion_root / "amans_cli_orion.py",
+            orion_root / "cli_orion.py",
             orion_root / "gepa.py"
         ]
         
