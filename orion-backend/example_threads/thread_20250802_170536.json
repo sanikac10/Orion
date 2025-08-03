@@ -1,0 +1,36 @@
+{
+  "thread_id": "20250802_170536",
+  "timestamp": "2025-08-02T17:05:36.950335",
+  "turns": [
+    {
+      "turn": 1,
+      "type": "mock_turn",
+      "content": "You are Orion, a helpful AI assistant. Keep responses under 150 words unless using tools. [TESTING MODE: Using mock tools since real GEPA files are not available]"
+    },
+    {
+      "turn": 2,
+      "type": "mock_turn",
+      "content": "Find me a good restaurant"
+    },
+    {
+      "turn": 3,
+      "type": "mock_turn",
+      "content": "ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=[ChatCompletionMessageToolCall(id='call_8pBp7PXwNSzDnNn2PvQkOOHH', function=Function(arguments='{}', name='search_restaurants'), type='function')])"
+    },
+    {
+      "turn": 4,
+      "type": "mock_turn",
+      "content": "{\n  \"restaurants\": [\n    {\n      \"name\": \"Mock Restaurant\",\n      \"cuisine\": \"Italian\",\n      \"query\": \"\"\n    }\n  ]\n}"
+    },
+    {
+      "turn": 5,
+      "type": "mock_turn",
+      "content": "I recommend trying \"Mock Restaurant,\" which specializes in Italian cuisine. It's a great choice if you're in the mood for some delicious pasta or pizza. Enjoy your meal!"
+    }
+  ],
+  "metadata": {
+    "total_turns": 5,
+    "mock_mode": true,
+    "success": true
+  }
+}

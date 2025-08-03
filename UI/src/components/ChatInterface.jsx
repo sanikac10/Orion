@@ -1,11 +1,168 @@
-// src/components/ChatInterface.jsx
 import React, { useState, useRef, useEffect } from 'react'
-import CollapsibleExecutionCard from './CollapsibleExecutionCard'
-import { Send, User, Plus, Search, MessageSquare, Settings, Menu } from 'lucide-react'
-import { Trash2 } from 'lucide-react'
+import { Send, User, Plus, Search, MessageSquare, Settings, Menu, Trash2, Brain, Zap, Clock, MapPin, Filter, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
+// WebSocket hook for real-time updates
+const useWebSocket = (sessionId) => {
+  const [socket, setSocket] = useState(null)
+  const [events, setEvents] = useState([])
+  const [connectionStatus, setConnectionStatus] = useState('disconnected')
+
+  useEffect(() => {
+    if (!sessionId) return
+
+    const ws = new WebSocket(`ws://localhost:8000/api/v1/ws/${sessionId}`)
+    
+    ws.onopen = () => {
+      setConnectionStatus('connected')
+      console.log('🔗 WebSocket connected')
+    }
+    
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data)
+        setEvents(prev => [...prev, data])
+        console.log('📡 WebSocket event:', data)
+      } catch (e) {
+        console.error('Failed to parse WebSocket message:', e)
+      }
+    }
+    
+    ws.onclose = () => {
+      setConnectionStatus('disconnected')
+      console.log('❌ WebSocket disconnected')
+    }
+    
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error)
+      setConnectionStatus('error')
+    }
+    
+    setSocket(ws)
+    
+    return () => {
+      ws.close()
+    }
+  }, [sessionId])
+
+  return { socket, events, connectionStatus }
+}
+
+// GEPA Execution Bar Component
+const GepaExecutionBar = ({ events, onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0)
+  const [completedSteps, setCompletedSteps] = useState([])
+  const [toolsUsed, setToolsUsed] = useState([])
+
+  // Listen for GEPA events
+  useEffect(() => {
+    const latestEvent = events[events.length - 1]
+    if (!latestEvent) return
+
+    switch (latestEvent.event?.type) {
+      case 'gepaProcessingStart':
+        setCurrentStep(0)
+        setCompletedSteps([])
+        setToolsUsed([])
+        break
+      case 'gepaToolsStart':
+        setToolsUsed(latestEvent.event.toolsToExecute || [])
+        break
+      case 'gepaToolsComplete':
+        setCompletedSteps(prev => [...prev, currentStep])
+        setCurrentStep(prev => prev + 1)
+        setTimeout(() => onComplete?.(latestEvent.event), 1000)
+        break
+    }
+  }, [events])
+
+  const steps = [
+    { icon: Brain, label: 'GEPA Analysis', emoji: '🧠' },
+    { icon: Search, label: 'Tool Search', emoji: '🔍' },
+    { icon: Zap, label: 'Execution', emoji: '⚡' },
+    { icon: CheckCircle, label: 'Complete', emoji: '✅' }
+  ]
+
+  return (
+    <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-xl p-3 shadow-lg w-full">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center space-x-2">
+          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+          <span className="text-xs text-gray-700">Processing</span>
+        </div>
+        <div className="text-xs text-gray-600">
+          {completedSteps.length}/{steps.length}
+        </div>
+      </div>
+      
+      {toolsUsed.length > 0 && (
+        <div className="mb-2 text-xs text-gray-600">
+          Tools: {toolsUsed.join(', ')}
+        </div>
+      )}
+      
+      <div className="flex items-center space-x-2">
+        {steps.map((s, idx) => (
+          <React.Fragment key={idx}>
+            <div className={`flex items-center space-x-1 px-2 py-1 rounded transition ${
+              completedSteps.includes(idx)
+                ? 'bg-green-100 text-green-700'
+                : currentStep === idx
+                  ? 'bg-blue-100 text-blue-700 scale-105'
+                  : 'bg-gray-100 text-gray-600'
+            }`}>
+              <span className="text-sm">{s.emoji}</span>
+              {completedSteps.includes(idx)
+                ? <CheckCircle size={12} className="text-green-600" />
+                : currentStep === idx
+                  ? <s.icon size={12} className="animate-pulse" />
+                  : <s.icon size={12} className="opacity-50" />
+              }
+              <span className="text-xs font-medium">{s.label}</span>
+            </div>
+            {idx < steps.length - 1 && (
+              <div className={`w-4 h-px ${
+                completedSteps.includes(idx) ? 'bg-green-400' : 'bg-gray-300'
+              }`} />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Collapsible execution card
+const CollapsibleExecutionCard = ({ events, onComplete }) => {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-xl p-3 shadow-lg max-w-md">
+      <div className="flex items-center justify-between">
+        <GepaExecutionBar events={events} onComplete={onComplete} />
+        <button
+          onClick={() => setExpanded(x => !x)}
+          className="ml-3 p-1 rounded-full hover:bg-white/20"
+        >
+          {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
+      </div>
+      {expanded && (
+        <div className="mt-4 p-3 bg-white/10 rounded-lg">
+          <div className="text-xs text-gray-600 space-y-1">
+            {events.slice(-5).map((event, idx) => (
+              <div key={idx} className="truncate">
+                <span className="font-mono">{event.event?.type}:</span> {event.event?.message}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Main Chat Interface
 const ChatInterface = () => {
-  // Replace single messages state with sessions array
   const [sessions, setSessions] = useState(() => {
     try {
       const saved = localStorage.getItem('orion-chat-sessions')
@@ -15,6 +172,7 @@ const ChatInterface = () => {
       return [{ id: Date.now(), messages: [], title: 'New Chat' }]
     }
   })
+  
   const [currentSessionId, setCurrentSessionId] = useState(() => {
     try {
       const saved = localStorage.getItem('orion-current-session')
@@ -24,28 +182,48 @@ const ChatInterface = () => {
     }
   })
   
-  // Compute messages from current session
   const messages = sessions.find(s => s.id === currentSessionId)?.messages || []
-  
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [showWelcome, setShowWelcome] = useState(() => messages.length === 0)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [showExecutionBar, setShowExecutionBar] = useState(false)
+  const [apiStatus, setApiStatus] = useState('checking')
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
-  // Persist sessions to localStorage whenever they change
+  // WebSocket connection
+  const { socket, events, connectionStatus } = useWebSocket(currentSessionId)
+
+  // Check API status on mount
+  useEffect(() => {
+    checkApiStatus()
+  }, [])
+
+  const checkApiStatus = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/health')
+      if (response.ok) {
+        setApiStatus('connected')
+        console.log('✅ Orion API connected')
+      } else {
+        setApiStatus('error')
+      }
+    } catch (error) {
+      setApiStatus('error')
+      console.error('❌ Failed to connect to Orion API:', error)
+    }
+  }
+
+  // Persist sessions
   useEffect(() => {
     localStorage.setItem('orion-chat-sessions', JSON.stringify(sessions))
   }, [sessions])
 
-  // Persist current session ID
   useEffect(() => {
     localStorage.setItem('orion-current-session', JSON.stringify(currentSessionId))
   }, [currentSessionId])
 
-  // Update showWelcome when messages change
   useEffect(() => {
     setShowWelcome(messages.length === 0)
   }, [messages.length])
@@ -59,35 +237,12 @@ const ChatInterface = () => {
     return () => document.head.removeChild(link)
   }, [])
 
-  // Orion icon loader
-  const OrionIcon = () => {
-    const [iconSrc, setIconSrc] = useState(null)
-    useEffect(() => {
-      const loadIcon = async () => {
-        const possibleNames = ['orion_logo.png', 'Image 1', 'orion_logo']
-        for (const name of possibleNames) {
-          try {
-            const data = await window.fs.readFile(name)
-            const blob = new Blob([data], { type: 'image/png' })
-            setIconSrc(URL.createObjectURL(blob))
-            break
-          } catch {}
-        }
-      }
-      loadIcon()
-    }, [])
-    if (!iconSrc) {
-      return <div className="w-4 h-4 flex items-center justify-center text-gray-700 text-sm">🏹</div>
-    }
-    return <img src={iconSrc} alt="Orion" className="w-4 h-4 object-contain" />
-  }
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
   useEffect(scrollToBottom, [messages, showExecutionBar])
 
-  // Helper function to update messages in current session
+  // Update messages in current session
   const updateCurrentSessionMessages = (updater) => {
     setSessions(prev => prev.map(session => 
       session.id === currentSessionId 
@@ -96,35 +251,44 @@ const ChatInterface = () => {
     ))
   }
 
-  const simulateTyping = text => {
-    setIsTyping(true)
-    setTimeout(() => {
+  // Handle execution complete from GEPA
+  const handleExecutionComplete = (eventData) => {
+    setShowExecutionBar(false)
+    
+    // The backend should have already sent the final response
+    // But we can show a completion message if needed
+    if (eventData?.response) {
       updateCurrentSessionMessages(prev => [
         ...prev,
-        { id: Date.now(), type: 'assistant', content: text, timestamp: Date.now() }
+        { 
+          id: Date.now(), 
+          type: 'assistant', 
+          content: eventData.response,
+          timestamp: Date.now(),
+          gepaData: eventData
+        }
       ])
-      setIsTyping(false)
-    }, 1000 + Math.random() * 1000)
+    }
+    setIsTyping(false)
   }
 
-  const handleExecutionComplete = () => {
-    const searchResults = [
-      "I found several excellent restaurants in San Francisco that are open for dinner tonight! Here are my top recommendations:\n\n🍽️ **Benu** - Modern Asian cuisine in SOMA\n⭐ 4.8/5 • Open until 10 PM • $$$\n\n🍝 **State Bird Provisions** - Creative small plates\n⭐ 4.7/5 • Open until 9:30 PM • $$$\n\n🥩 **House of Prime Rib** - Classic steakhouse\n⭐ 4.6/5 • Open until 10 PM • $$$",
-      "Perfect! I've filtered through current dinner options in SF and found 8 great matches:\n\n🌟 **Top Pick: Atelier Crenn** - French fine dining\n📍 Cow Hollow • Open until 9 PM\n\n🍜 **Also Great: Mensho Tokyo** - Authentic ramen\n📍 Tenderloin • Open until 10 PM\n\n🐟 **Swan Oyster Depot** - Fresh seafood\n📍 Nob Hill • Open until 5:30 PM"
-    ]
-    simulateTyping(searchResults[Math.floor(Math.random() * searchResults.length)])
-  }
-
-  const handleSend = () => {
+  // Send message to backend
+  const handleSend = async () => {
     if (!inputValue.trim()) return
+    if (apiStatus !== 'connected') {
+      alert('Orion backend is not connected. Please check that the server is running on localhost:8000')
+      return
+    }
+
     setShowExecutionBar(false)
 
+    // Add user message
     updateCurrentSessionMessages(prev => [
       ...prev,
       { id: Date.now(), type: 'user', content: inputValue, timestamp: Date.now() }
     ])
 
-    // Update session title if it's the first message
+    // Update session title if first message
     if (messages.length === 0) {
       setSessions(prev => prev.map(session => 
         session.id === currentSessionId 
@@ -133,35 +297,103 @@ const ChatInterface = () => {
       ))
     }
 
-    const searchKeywords = ['restaurant', 'food', 'dinner', 'lunch', 'find', 'search', 'locate', 'near', 'where']
-    const isSearchQuery = searchKeywords.some(k => inputValue.toLowerCase().includes(k))
+    const userMessage = inputValue
+    setInputValue('')
+    setIsTyping(true)
+    setShowExecutionBar(true)
 
-    if (isSearchQuery) {
+    try {
+      // Send to Orion backend
+      const response = await fetch('http://localhost:8000/api/v1/chat/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          sessionId: currentSessionId.toString(),
+          userId: 'default_user'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+
+      const data = await response.json()
+      
+      if (data.success) {
+        // The WebSocket should handle the real-time updates
+        // But if there's an immediate response, show it
+        if (data.immediate_response) {
+          updateCurrentSessionMessages(prev => [
+            ...prev,
+            { 
+              id: Date.now(), 
+              type: 'assistant', 
+              content: data.immediate_response,
+              timestamp: Date.now(),
+              gepaData: data.taskFamily
+            }
+          ])
+          setIsTyping(false)
+          setShowExecutionBar(false)
+        }
+      } else {
+        throw new Error(data.error || 'Unknown error')
+      }
+
+    } catch (error) {
+      console.error('Error sending message:', error)
       updateCurrentSessionMessages(prev => [
         ...prev,
-        {
-          id: Date.now() + 1,
-          type: 'assistant',
-          content: "I'm searching for you...",
+        { 
+          id: Date.now(), 
+          type: 'assistant', 
+          content: `Error: ${error.message}. Please make sure the Orion backend is running on localhost:8000`,
           timestamp: Date.now(),
-          showExecutionBar: true
+          isError: true
         }
       ])
-      setShowExecutionBar(true)
-    } else {
-      const responses = [
-        "That's an interesting question! Let me think about that...",
-        "I understand what you're asking. Here's my perspective on that topic.",
-        "Great point! I can help you with that. Let me break it down.",
-        "I see what you mean. That's something I can definitely assist with.",
-        "Thanks for sharing that with me. Here's what I think about it."
-      ]
-      simulateTyping(responses[Math.floor(Math.random() * responses.length)])
+      setIsTyping(false)
+      setShowExecutionBar(false)
     }
 
-    setInputValue('')
     inputRef.current?.focus()
   }
+
+  // Listen for WebSocket events that contain responses
+  useEffect(() => {
+    const latestEvent = events[events.length - 1]
+    if (!latestEvent?.event) return
+
+    switch (latestEvent.event.type) {
+      case 'llmChunk':
+        // Handle streaming response
+        if (latestEvent.event.isComplete) {
+          updateCurrentSessionMessages(prev => [
+            ...prev,
+            { 
+              id: Date.now(), 
+              type: 'assistant', 
+              content: latestEvent.event.content,
+              timestamp: Date.now()
+            }
+          ])
+          setIsTyping(false)
+          setShowExecutionBar(false)
+        }
+        break
+      case 'messageComplete':
+        setIsTyping(false)
+        setShowExecutionBar(false)
+        break
+      case 'gepaThreadSaved':
+        // Show a success indicator
+        console.log('🧠 GEPA thread saved:', latestEvent.event.filepath)
+        break
+    }
+  }, [events])
 
   const handleKeyPress = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -173,7 +405,6 @@ const ChatInterface = () => {
   const formatTime = timestamp =>
     new Date(timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
 
-  // Wire up handleNewChat to create new session
   const handleNewChat = () => {
     const newSession = { 
       id: Date.now(), 
@@ -186,22 +417,17 @@ const ChatInterface = () => {
     setShowExecutionBar(false)
   }
 
-    // --- clear everything and start fresh ---
   const handleClearAllChats = () => {
-    // remove from storage
     localStorage.removeItem('orion-chat-sessions')
     localStorage.removeItem('orion-current-session')
-
-    // reset to one empty session
     const fresh = { id: Date.now(), messages: [], title: 'New Chat' }
-    setSessions([ fresh ])
+    setSessions([fresh])
     setCurrentSessionId(fresh.id)
     setInputValue('')
     setShowWelcome(true)
     setShowExecutionBar(false)
   }
 
-  // Function to switch to a different session
   const switchToSession = (sessionId) => {
     setCurrentSessionId(sessionId)
     setShowExecutionBar(false)
@@ -216,9 +442,7 @@ const ChatInterface = () => {
       }}
     >
       {/* Sidebar */}
-      <div
-        className={`${sidebarOpen ? 'w-64' : 'w-16'} transition-all duration-300 bg-gray-900/20 backdrop-blur-xl border-r border-white/20 flex flex-col`}
-      >
+      <div className={`${sidebarOpen ? 'w-64' : 'w-16'} transition-all duration-300 bg-gray-900/20 backdrop-blur-xl border-r border-white/20 flex flex-col`}>
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <button
@@ -237,7 +461,27 @@ const ChatInterface = () => {
               </button>
             )}
           </div>
+          
+          {/* API Status Indicator */}
+          {sidebarOpen && (
+            <div className="mt-2 flex items-center space-x-2 text-xs">
+              <div className={`w-2 h-2 rounded-full ${
+                apiStatus === 'connected' ? 'bg-green-400' :
+                apiStatus === 'error' ? 'bg-red-400' : 'bg-yellow-400'
+              }`} />
+              <span className="text-white/70">
+                {apiStatus === 'connected' ? 'GEPA Connected' :
+                 apiStatus === 'error' ? 'Backend Offline' : 'Checking...'}
+              </span>
+              <div className={`w-2 h-2 rounded-full ${
+                connectionStatus === 'connected' ? 'bg-green-400' :
+                connectionStatus === 'error' ? 'bg-red-400' : 'bg-yellow-400'
+              }`} />
+              <span className="text-white/70">WebSocket</span>
+            </div>
+          )}
         </div>
+        
         {sidebarOpen && (
           <div className="flex-1 p-4 space-y-2">
             <button className="w-full flex items-center space-x-3 px-3 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors text-sm">
@@ -265,6 +509,7 @@ const ChatInterface = () => {
             </div>
           </div>
         )}
+        
         {sidebarOpen && (
           <div className="p-4 border-t border-white/10">
             <button className="w-full flex items-center space-x-3 px-3 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors text-sm">
@@ -272,11 +517,11 @@ const ChatInterface = () => {
               <span>Settings</span>
             </button>
             <button
-            onClick={handleClearAllChats}
-            className="w-full flex items-center space-x-3 px-3 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors text-sm"
+              onClick={handleClearAllChats}
+              className="w-full flex items-center space-x-3 px-3 py-2 text-white/80 hover:bg-white/10 rounded-lg transition-colors text-sm"
             >
-            <Trash2 size={16} className="text-white" />
-            <span>Clear All Chats</span>
+              <Trash2 size={16} />
+              <span>Clear All Chats</span>
             </button>
           </div>
         )}
@@ -289,7 +534,12 @@ const ChatInterface = () => {
             <div className="flex flex-col items-center justify-center h-full space-y-8">
               <div className="text-center space-y-4">
                 <h1 className="text-6xl font-light text-gray-800 mb-2">🏹 Orion</h1>
-                <p className="text-2xl text-gray-600">What can I do for you?</p>
+                <p className="text-2xl text-gray-600">AI Learning Agent powered by GEPA</p>
+                <p className="text-sm text-gray-500">
+                  {apiStatus === 'connected' 
+                    ? `Connected to ${events.length > 0 ? 'GEPA' : 'backend'} • ${connectionStatus === 'connected' ? 'Live updates active' : 'WebSocket disconnected'}`
+                    : 'Backend offline - Please start the Orion server'}
+                </p>
               </div>
               <div className="w-full max-w-4xl">
                 <div className="flex items-end space-x-4">
@@ -298,16 +548,17 @@ const ChatInterface = () => {
                     value={inputValue}
                     onChange={e => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask anything..."
-                    className="flex-1 px-6 py-4 bg-white/25 backdrop-blur-xl border border-white/40 rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 text-lg leading-relaxed text-gray-800 placeholder-gray-600 shadow-lg transition-all"
+                    placeholder={apiStatus === 'connected' ? "Try: 'Find me a good restaurant for dinner' or 'Book a meeting with Sarah'" : "Start the backend server first..."}
+                    disabled={apiStatus !== 'connected'}
+                    className="flex-1 px-6 py-4 bg-white/25 backdrop-blur-xl border border-white/40 rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 text-lg leading-relaxed text-gray-800 placeholder-gray-600 shadow-lg transition-all disabled:opacity-50"
                     rows={1}
                     style={{ minHeight: '60px', maxHeight: '120px' }}
                   />
                   <button
                     onClick={handleSend}
-                    disabled={!inputValue.trim()}
+                    disabled={!inputValue.trim() || apiStatus !== 'connected'}
                     className={`w-14 h-14 flex-shrink-0 rounded-full flex items-center justify-center transition-all shadow-lg backdrop-blur-xl border ${
-                      inputValue.trim()
+                      inputValue.trim() && apiStatus === 'connected'
                         ? 'bg-white/30 hover:bg-white/40 text-gray-700 border-white/40 transform hover:scale-105'
                         : 'bg-white/15 text-gray-500 cursor-not-allowed border-white/25'
                     }`}
@@ -325,13 +576,20 @@ const ChatInterface = () => {
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md border ${
                       message.type === 'user' ? 'bg-white/25 backdrop-blur-md border-white/40' : 'bg-white/15 backdrop-blur-md border-white/30'
                     }`}>
-                      {message.type === 'user' ? <User size={18} className="text-gray-700" /> : <OrionIcon />}
+                      {message.type === 'user' ? <User size={18} className="text-gray-700" /> : <Brain size={18} className="text-gray-700" />}
                     </div>
                     <div className={`max-w-lg lg:max-w-xl xl:max-w-2xl ${message.type === 'user' ? 'text-right' : ''}`}>
                       <div className={`inline-block px-6 py-3 rounded-3xl shadow-lg backdrop-blur-xl border ${
-                        message.type === 'user' ? 'bg-white/30 text-gray-800 border-white/40' : 'bg-white/20 text-gray-800 border-white/30'
+                        message.type === 'user' ? 'bg-white/30 text-gray-800 border-white/40' : 
+                        message.isError ? 'bg-red-100/50 text-red-800 border-red-200/50' :
+                        'bg-white/20 text-gray-800 border-white/30'
                       }`}>
                         <p className="whitespace-pre-line leading-relaxed text-base">{message.content}</p>
+                        {message.gepaData && (
+                          <div className="mt-2 text-xs text-gray-600">
+                            GEPA Mode: {message.gepaData.type} • Tools: {message.gepaData.tools_used?.join(', ') || 'None'}
+                          </div>
+                        )}
                       </div>
                       <p className={`mt-2 text-sm text-gray-600 ${message.type === 'user' ? 'text-right' : 'text-left'}`}>
                         {formatTime(message.timestamp)}
@@ -339,10 +597,10 @@ const ChatInterface = () => {
                     </div>
                   </div>
 
-                  {message.showExecutionBar && showExecutionBar && (
-                    <div className={`mt-4 ${message.type === 'user' ? 'flex justify-end' : 'flex justify-start ml-14'}`}>
+                  {showExecutionBar && message.type === 'user' && message.id === messages[messages.length - 1]?.id && (
+                    <div className="mt-4 flex justify-start ml-14">
                       <CollapsibleExecutionCard
-                        isVisible={showExecutionBar}
+                        events={events}
                         onComplete={handleExecutionComplete}
                       />
                     </div>
@@ -353,7 +611,7 @@ const ChatInterface = () => {
               {isTyping && (
                 <div className="flex items-start space-x-4 max-w-4xl mx-auto">
                   <div className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center shadow-md border border-white/30">
-                    <OrionIcon />
+                    <Brain size={18} className="text-gray-700" />
                   </div>
                   <div className="rounded-3xl bg-white/20 backdrop-blur-xl border border-white/30 px-6 py-3 shadow-lg">
                     <div className="flex space-x-2">
@@ -378,16 +636,17 @@ const ChatInterface = () => {
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="What's on your mind..."
+                placeholder={apiStatus === 'connected' ? "What's on your mind..." : "Backend offline..."}
+                disabled={apiStatus !== 'connected'}
                 rows={1}
-                className="flex-1 rounded-3xl border border-white/40 bg-white/25 px-6 py-4 placeholder-gray-600 shadow-lg transition-all focus:border-white/60 focus:outline-none focus:ring-2 focus:ring-white/60 resize-none leading-relaxed text-base text-gray-800"
+                className="flex-1 rounded-3xl border border-white/40 bg-white/25 px-6 py-4 placeholder-gray-600 shadow-lg transition-all focus:border-white/60 focus:outline-none focus:ring-2 focus:ring-white/60 resize-none leading-relaxed text-base text-gray-800 disabled:opacity-50"
                 style={{ minHeight: '60px', maxHeight: '120px' }}
               />
               <button
                 onClick={handleSend}
-                disabled={!inputValue.trim()}
+                disabled={!inputValue.trim() || apiStatus !== 'connected'}
                 className={`w-14 h-14 flex-shrink-0 rounded-full flex items-center justify-center border transition-all shadow-lg backdrop-blur-xl ${
-                  inputValue.trim()
+                  inputValue.trim() && apiStatus === 'connected'
                     ? 'border-white/40 bg-white/30 hover:bg-white/40 transform hover:scale-105 text-gray-700 hover:shadow-xl'
                     : 'border-white/25 bg-white/15 cursor-not-allowed text-gray-500'
                 }`}
