@@ -1,5 +1,6 @@
 # 🔧 Orion: Agentic Workflow Caching Through Conversational GEPA
 
+> Tired of explaining the same workflow to your AI over and over? Orion breaks the déjà vu cycle by copying your workflow patterns and spinning off mini-agents so you never have to explain again.
 > **"Finally, an AI that remembers HOW you work, not just WHAT you said"**
 
 ---
